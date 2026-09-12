@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "ugc_videos_handle_caption_unique" ON "ugc_videos" USING btree ("handle","caption");

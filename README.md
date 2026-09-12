@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Delice — Slice of Happiness
 
-## Getting Started
+Next.js (App Router) site for Delice: homepage with a draggable flavor wheel, product detail pages,
+an Explore All grid, a reels-style UGC video feed, a store locator, and a password-protected admin
+panel for managing products/stores/videos.
 
-First, run the development server:
+Stack: Next.js 16 + Tailwind v4 · Drizzle ORM + Neon (Postgres) · NextAuth v5 (Credentials) ·
+Cloudflare R2 for media storage.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Install deps** (already done if you're reading this after scaffolding): `npm install`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Copy env vars**: `cp .env.example .env.local` and fill in:
+   - `DATABASE_URL` — from your [Neon](https://neon.tech) project (Postgres connection string)
+   - `AUTH_SECRET` — a random secret, e.g. `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`
+   - `AUTH_URL` — `http://localhost:3000` locally
+   - `R2_*` — from your Cloudflare R2 bucket (Account ID, an API token's Access Key ID/Secret,
+     bucket name, and the bucket's public base URL — either the `r2.dev` dev URL or a custom domain
+     you've connected to the bucket)
+   - `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` — credentials for the one admin login (your friend),
+     used only by the seed script
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Push the schema to Neon**: `npm run db:push`
 
-## Learn More
+4. **Seed sample data + the admin user**: `npm run db:seed`
+   (Re-run any time after changing `SEED_ADMIN_EMAIL`/`SEED_ADMIN_PASSWORD` to add another admin —
+   it won't duplicate existing rows.)
 
-To learn more about Next.js, take a look at the following resources:
+5. **Run the dev server**: `npm run dev`, then open http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. **Admin panel**: http://localhost:3000/admin/login — sign in with the seeded admin credentials to
+   manage products, stores, and UGC videos. Uploads go straight to R2 via presigned URLs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+- `src/app/` — routes: `/` (homepage), `/product/[slug]`, `/explore`, `/videos`, `/admin/*`
+- `src/db/` — Drizzle schema (`schema.ts`), client (`index.ts`), queries (`queries.ts`), seed script
+- `src/lib/actions/` — server actions used by the admin forms (create/update/delete)
+- `src/lib/r2.ts` — Cloudflare R2 presigned upload helper
+- `src/auth.ts` / `src/proxy.ts` — NextAuth config and route protection for `/admin/*`
+- `_mockups/` — the original static HTML mockups this build was based on (reference only)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Known gaps / next steps
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The animated top-view → side-view hero transition (wheel tap → product detail) isn't built yet —
+  it needs the real top-down/side-profile product photography (per-flavor top-down still,
+  side-profile still, and a backup transition video) first. `imageTopUrl`/`imageSideUrl`/
+  `transitionVideoUrl` fields already exist on `products` for it.
+- All product/store/video content ships as seed data with color-swatch placeholders until real
+  photos are uploaded through the admin panel.
+- SEO extras (sitemap, structured data for store locations) aren't wired up yet.

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Flavor — Delice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F7EFE4; --cream-deep:#EFE1CD; --plum:#432237; --plum-soft:#7C4667;
+    --orange:#DE8A4C; --ink:#2A1620; --ink-70: rgba(42,22,32,.7); --ink-45: rgba(42,22,32,.45);
+    --paper:#FFFBF5; --line: rgba(42,22,32,.12);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Instrument Sans', sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2{font-family:'Fraunces', serif; font-weight:500; margin:0; letter-spacing:-0.01em;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:720px; margin:0 auto; padding:0 24px;}
+
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:20px 24px;}
+  .back{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-70);}
+  .back svg{width:16px; height:16px;}
+  .logo{font-family:'Fraunces', serif; font-size:19px; font-weight:600; color:var(--plum);}
+
+  .stage{
+    padding:20px 24px 8px;
+    display:flex; justify-content:center;
+  }
+  .hero-tri{
+    width:min(70vw, 280px); height:min(62vw, 250px);
+    clip-path:polygon(50% 4%, 6% 96%, 94% 96%, 82% 78%, 50% 30%, 18% 78%);
+    filter:drop-shadow(0 24px 34px rgba(42,22,32,.3));
+    position:relative;
+  }
+  .hero-tri .handle{
+    position:absolute; left:50%; bottom:16%; transform:translateX(-50%);
+    width:34%; height:8%; background:var(--paper); border-radius:100px;
+    box-shadow:0 2px 5px rgba(42,22,32,.2);
+  }
+
+  .detail{
+    padding:28px 24px 0;
+    text-align:center;
+  }
+  .kicker{font-size:13px; color:var(--plum-soft); margin-bottom:8px;}
+  .detail h1{font-size:clamp(28px, 6vw, 40px); color:var(--plum);}
+  .price-pill{
+    display:inline-block; margin-top:14px; font-size:13.5px; color:var(--ink);
+    border:1px solid var(--line); padding:8px 18px; border-radius:100px;
+  }
+  .desc{max-width:480px; margin:20px auto 0; font-size:15.5px; line-height:1.65; color:var(--ink-70);}
+
+  .cta-row{
+    display:flex; gap:12px; justify-content:center; margin:28px 24px 0; flex-wrap:wrap;
+  }
+  .cta-primary{
+    background:var(--plum); color:var(--cream); border:none; border-radius:100px;
+    padding:14px 26px; font-size:14.5px;
+  }
+  .cta-secondary{
+    background:var(--paper); color:var(--plum); border:1px solid var(--line); border-radius:100px;
+    padding:14px 26px; font-size:14.5px;
+  }
+
+  .more{padding:64px 0 80px;}
+  .more h2{font-size:20px; color:var(--plum); padding:0 24px; margin-bottom:18px;}
+  .more-row{display:flex; gap:14px; overflow-x:auto; padding:0 24px 8px; scroll-snap-type:x proximity;}
+  .more-row::-webkit-scrollbar{display:none;}
+  .more-card{
+    flex:0 0 auto; width:130px; text-align:center; scroll-snap-align:start;
+  }
+  .more-tri{
+    width:88px; height:78px; margin:0 auto 10px;
+    clip-path:polygon(50% 4%, 6% 96%, 94% 96%, 82% 78%, 50% 30%, 18% 78%);
+    filter:drop-shadow(0 8px 14px rgba(42,22,32,.2));
+  }
+  .more-card span{font-size:12.5px; color:var(--ink-70);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+    Back
+  </a>
+  <a href="index.html" class="logo">Delice</a>
+  <div style="width:44px;"></div>
+</div>
+
+<div class="stage">
+  <div class="hero-tri" id="heroTri"><div class="handle"></div></div>
+</div>
+
+<div class="detail">
+  <div class="kicker" id="kicker">Cheesecake</div>
+  <h1 id="name">Flavor</h1>
+  <div class="price-pill" id="price">₹0 onwards</div>
+  <p class="desc" id="desc">Description loading.</p>
+</div>
+
+<div class="cta-row">
+  <a href="index.html#find" class="cta-primary">Find near you</a>
+  <a href="index.html" class="cta-secondary">Back to flavors</a>
+</div>
+
+<div class="more">
+  <h2>Explore other flavors</h2>
+  <div class="more-row" id="moreRow"></div>
+</div>
+
+<script>
+(function(){
+  var FLAVORS = [
+    { slug:"vanilla",   name:"Classic Vanilla Bean", kicker:"The original",
+      color:"linear-gradient(160deg, #EFC3CD, #D68C9E)", price:"₹149",
+      desc:"Slow-baked New York style with real vanilla bean flecks and a buttery biscuit base. Where it all started." },
+    { slug:"blueberry", name:"Blueberry Cheesecake", kicker:"Fan favorite",
+      color:"linear-gradient(160deg, #9A6289, #5F3450)", price:"₹169",
+      desc:"Tangy blueberry compote swirled through our classic base, topped with fresh berries." },
+    { slug:"mango",     name:"Mango Delice", kicker:"Seasonal",
+      color:"linear-gradient(160deg, #F0A868, #D97A2E)", price:"₹159",
+      desc:"Alphonso mango puree layered over vanilla cheesecake — a Kerala summer favorite." },
+    { slug:"chocolate", name:"Belgian Chocolate", kicker:"Rich & dense",
+      color:"linear-gradient(160deg, #7A4A34, #40200F)", price:"₹179",
+      desc:"Dark Belgian chocolate ganache over a rich cocoa cheesecake base, for the serious chocolate lover." },
+    { slug:"strawberry",name:"Strawberry Rose", kicker:"Delicate & floral",
+      color:"linear-gradient(160deg, #DD8E8B, #B4494A)", price:"₹169",
+      desc:"Fresh strawberry compote with a whisper of rose water, topped with petals." },
+    { slug:"pistachio", name:"Pistachio Kunafa", kicker:"Nutty & honeyed",
+      color:"linear-gradient(160deg, #A9B98E, #6E7E55)", price:"₹189",
+      desc:"Crushed pistachio and crisp kunafa strands over a honeyed cheesecake base." }
+  ];
+
+  var params = new URLSearchParams(window.location.search);
+  var slug = params.get('f') || FLAVORS[0].slug;
+  var flavor = FLAVORS.find(function(f){ return f.slug === slug; }) || FLAVORS[0];
+
+  document.getElementById('heroTri').style.background = flavor.color;
+  document.getElementById('kicker').textContent = flavor.kicker;
+  document.getElementById('name').textContent = flavor.name;
+  document.getElementById('price').textContent = flavor.price + ' onwards';
+  document.getElementById('desc').textContent = flavor.desc;
+  document.title = flavor.name + ' — Delice';
+
+  var moreRow = document.getElementById('moreRow');
+  FLAVORS.filter(function(f){ return f.slug !== flavor.slug; }).forEach(function(f){
+    var a = document.createElement('a');
+    a.href = 'flavor.html?f=' + f.slug;
+    a.className = 'more-card';
+    a.innerHTML = '<div class="more-tri" style="background:'+f.color+'"></div><span>'+f.name+'</span>';
+    moreRow.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

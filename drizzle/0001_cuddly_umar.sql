@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "stores_name_address_unique" ON "stores" USING btree ("name","address_line");

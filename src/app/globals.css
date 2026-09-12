@@ -1,26 +1,171 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Legacy tokens — still used by pages not yet migrated to the new system */
+  --cream: #F7EFE4;
+  --cream-deep: #EFE1CD;
+  --plum: #432237;
+  --plum-soft: #7C4667;
+  --blush: #E3A9B6;
+  --orange: #DE8A4C;
+  --cocoa: #5A3222;
+  --rose: #C15D5E;
+  --sage: #8B9B72;
+  --ink: #2A1620;
+  --ink-70: rgba(42, 22, 32, .7);
+  --ink-45: rgba(42, 22, 32, .45);
+  --paper: #FFFBF5;
+  --line: rgba(42, 22, 32, .12);
+
+  /* Artisanal Confectionery System (DESIGN.md) */
+  --ac-surface: #fff8f1;
+  --ac-surface-dim: #e1d9ce;
+  --ac-surface-bright: #fff8f1;
+  --ac-surface-container-lowest: #ffffff;
+  --ac-surface-container-low: #fbf2e7;
+  --ac-surface-container: #f5ede2;
+  --ac-surface-container-high: #efe7dc;
+  --ac-surface-container-highest: #e9e1d7;
+  --ac-on-surface: #1e1b15;
+  --ac-on-surface-variant: #4e4449;
+  --ac-inverse-surface: #343029;
+  --ac-inverse-on-surface: #f8f0e5;
+  --ac-outline: #807479;
+  --ac-outline-variant: #d2c3c9;
+  --ac-primary: #2b0d22;
+  --ac-on-primary: #ffffff;
+  --ac-primary-container: #432237;
+  --ac-on-primary-container: #b487a1;
+  --ac-secondary: #914c12;
+  --ac-on-secondary: #ffffff;
+  --ac-secondary-container: #fda463;
+  --ac-on-secondary-container: #753900;
+  --ac-tertiary: #320625;
+  --ac-on-tertiary: #ffffff;
+  --ac-tertiary-container: #4b1c3b;
+  --ac-on-tertiary-container: #c082a6;
+  --ac-background: #fff8f1;
+  --ac-on-background: #1e1b15;
+  --ac-cream-deep: #EFE1CD;
+  --ac-paper: #FFFBF5;
+  --ac-ink: #2A1620;
+  --ac-ink-subtle: rgba(42, 22, 32, 0.70);
+  --ac-ink-muted: rgba(42, 22, 32, 0.45);
+  --ac-cocoa: #5A3222;
+  --ac-sage: #8B9B72;
+  --ac-blush: #E3A9B6;
+  --ac-rose: #C15D5E;
+  --ac-border-hairline: rgba(42, 22, 32, 0.12);
+  --ac-surface-plum-translucent: rgba(247, 239, 228, 0.06);
+  --ac-border-plum-translucent: rgba(247, 239, 228, 0.16);
+
+  /* Brand maroon — hero + footer signature colour */
+  --ac-maroon: #661a26;
+  --ac-maroon-deep: #4f1420;
+  --ac-on-maroon: #fdf3e7;
+  --ac-on-maroon-muted: rgba(253, 243, 231, 0.65);
+  --ac-on-maroon-line: rgba(253, 243, 231, 0.2);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: var(--cream);
+  --color-cream-deep: var(--cream-deep);
+  --color-plum: var(--plum);
+  --color-plum-soft: var(--plum-soft);
+  --color-blush: var(--blush);
+  --color-orange: var(--orange);
+  --color-cocoa: var(--cocoa);
+  --color-rose: var(--rose);
+  --color-sage: var(--sage);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-line: var(--line);
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-instrument);
+
+  --color-ac-surface: var(--ac-surface);
+  --color-ac-surface-dim: var(--ac-surface-dim);
+  --color-ac-surface-bright: var(--ac-surface-bright);
+  --color-ac-surface-container-lowest: var(--ac-surface-container-lowest);
+  --color-ac-surface-container-low: var(--ac-surface-container-low);
+  --color-ac-surface-container: var(--ac-surface-container);
+  --color-ac-surface-container-high: var(--ac-surface-container-high);
+  --color-ac-surface-container-highest: var(--ac-surface-container-highest);
+  --color-ac-on-surface: var(--ac-on-surface);
+  --color-ac-on-surface-variant: var(--ac-on-surface-variant);
+  --color-ac-inverse-surface: var(--ac-inverse-surface);
+  --color-ac-inverse-on-surface: var(--ac-inverse-on-surface);
+  --color-ac-outline: var(--ac-outline);
+  --color-ac-outline-variant: var(--ac-outline-variant);
+  --color-ac-primary: var(--ac-primary);
+  --color-ac-on-primary: var(--ac-on-primary);
+  --color-ac-primary-container: var(--ac-primary-container);
+  --color-ac-on-primary-container: var(--ac-on-primary-container);
+  --color-ac-secondary: var(--ac-secondary);
+  --color-ac-on-secondary: var(--ac-on-secondary);
+  --color-ac-secondary-container: var(--ac-secondary-container);
+  --color-ac-on-secondary-container: var(--ac-on-secondary-container);
+  --color-ac-tertiary: var(--ac-tertiary);
+  --color-ac-on-tertiary: var(--ac-on-tertiary);
+  --color-ac-tertiary-container: var(--ac-tertiary-container);
+  --color-ac-on-tertiary-container: var(--ac-on-tertiary-container);
+  --color-ac-background: var(--ac-background);
+  --color-ac-on-background: var(--ac-on-background);
+  --color-ac-cream-deep: var(--ac-cream-deep);
+  --color-ac-paper: var(--ac-paper);
+  --color-ac-ink: var(--ac-ink);
+  --color-ac-ink-subtle: var(--ac-ink-subtle);
+  --color-ac-ink-muted: var(--ac-ink-muted);
+  --color-ac-cocoa: var(--ac-cocoa);
+  --color-ac-sage: var(--ac-sage);
+  --color-ac-blush: var(--ac-blush);
+  --color-ac-rose: var(--ac-rose);
+  --color-ac-border-hairline: var(--ac-border-hairline);
+  --color-ac-surface-plum-translucent: var(--ac-surface-plum-translucent);
+  --color-ac-border-plum-translucent: var(--ac-border-plum-translucent);
+
+  --color-ac-maroon: var(--ac-maroon);
+  --color-ac-maroon-deep: var(--ac-maroon-deep);
+  --color-ac-on-maroon: var(--ac-on-maroon);
+  --color-ac-on-maroon-muted: var(--ac-on-maroon-muted);
+  --color-ac-on-maroon-line: var(--ac-on-maroon-line);
+
+  --font-editorial: var(--font-newsreader);
+  --font-humanist: var(--font-jakarta);
+  --font-display: var(--font-modak);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-instrument), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-fraunces), serif;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--marquee-end, -50%), 0, 0); }
+}
+
+.animate-marquee {
+  animation: marquee-scroll linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
 }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Explore Videos — Delice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --cream:#F7EFE4; --orange:#DE8A4C; }
+  *{box-sizing:border-box;}
+  html,body{margin:0; height:100%; background:#0F0710; overflow:hidden;}
+  body{font-family:'Instrument Sans', sans-serif; -webkit-font-smoothing:antialiased;}
+  a{color:inherit; text-decoration:none;}
+
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 20px;
+    background:linear-gradient(180deg, rgba(0,0,0,.55), transparent);
+  }
+  .back{ width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.15);
+    display:flex; align-items:center; justify-content:center; }
+  .back svg{width:16px; height:16px; stroke:#fff;}
+  .topbar h1{
+    font-family:'Fraunces', serif; font-size:16px; font-weight:500; color:#fff; margin:0;
+  }
+
+  .reels{
+    height:100svh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    -webkit-overflow-scrolling:touch;
+  }
+  .reels::-webkit-scrollbar{display:none;}
+
+  .reel{
+    height:100svh;
+    scroll-snap-align:start;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+  }
+  .reel::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.15) 0%, transparent 30%, rgba(0,0,0,.75) 100%);
+  }
+  .reel .play-toggle{
+    position:absolute; inset:0; z-index:5; display:flex; align-items:center; justify-content:center;
+    background:none; border:none; padding:0;
+  }
+  .play-icon{
+    width:56px; height:56px; border-radius:50%; background:rgba(255,255,255,.18);
+    display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .15s ease;
+    backdrop-filter:blur(2px);
+  }
+  .play-icon svg{width:20px; height:20px; margin-left:2px;}
+  .reel.paused .play-icon{opacity:1;}
+
+  .reel-info{
+    position:relative; z-index:10;
+    padding:0 74px 34px 18px;
+    color:#fff;
+  }
+  .reel-info .handle{
+    font-size:14.5px; font-weight:600; margin-bottom:6px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .reel-info .avatar{
+    width:26px; height:26px; border-radius:50%;
+    background:linear-gradient(160deg,#E3A9B6,#7C4667);
+    border:1.5px solid #fff;
+  }
+  .reel-info .caption{font-size:13.5px; line-height:1.4; color:rgba(255,255,255,.92); max-width:78%;}
+  .reel-info .sound{
+    display:flex; align-items:center; gap:6px; margin-top:10px; font-size:12px; color:rgba(255,255,255,.75);
+  }
+
+  .reel-actions{
+    position:absolute; right:12px; bottom:34px; z-index:10;
+    display:flex; flex-direction:column; align-items:center; gap:20px;
+  }
+  .reel-actions button{
+    background:none; border:none; color:#fff; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px;
+  }
+  .reel-actions svg{width:26px; height:26px;}
+
+  .brand-tag{
+    position:absolute; top:70px; left:18px; z-index:10;
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(0,0,0,.35); padding:6px 12px; border-radius:100px;
+    font-size:12px; color:#fff;
+  }
+  .brand-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--orange);}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="back" aria-label="Back to home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>Explore</h1>
+  <div style="width:36px;"></div>
+</div>
+
+<div class="reels" id="reels"></div>
+
+<script>
+(function(){
+  var CLIPS = [
+    { handle:"@keralafoodie", caption:"This blueberry cheesecake from Delice is unreal 😍", grad:"linear-gradient(160deg,#7C4667,#2A1620)" },
+    { handle:"@thattukada.eats", caption:"Mango Delice hits different in this heat 🥭", grad:"linear-gradient(160deg,#DE8A4C,#5A3222)" },
+    { handle:"@munch_with_meera", caption:"Boxed this fresh from the Mavoor Road store", grad:"linear-gradient(160deg,#8B9B72,#2A1620)" },
+    { handle:"@dessertdiaries", caption:"Belgian chocolate slice, no notes.", grad:"linear-gradient(160deg,#40200F,#7A4A34)" },
+    { handle:"@snackspottt", caption:"Found @delice at a shop in Kochi today!", grad:"linear-gradient(160deg,#C15D5E,#43223A)" },
+    { handle:"@ente_kitchen", caption:"Pistachio kunafa cheesecake >>>", grad:"linear-gradient(160deg,#A9B98E,#3F4A2E)" },
+    { handle:"@keralafoodie", caption:"Slice of happiness, literally.", grad:"linear-gradient(160deg,#E3A9B6,#5F3450)" }
+  ];
+
+  var reels = document.getElementById('reels');
+
+  CLIPS.forEach(function(c){
+    var reel = document.createElement('div');
+    reel.className = 'reel';
+    reel.style.background = c.grad;
+    reel.innerHTML =
+      '<div class="brand-tag">Delice</div>' +
+      '<button class="play-toggle" aria-label="Play or pause">' +
+        '<div class="play-icon"><svg viewBox="0 0 24 24" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg></div>' +
+      '</button>' +
+      '<div class="reel-info">' +
+        '<div class="handle"><span class="avatar"></span>' + c.handle + '</div>' +
+        '<div class="caption">' + c.caption + '</div>' +
+        '<div class="sound">♪ Original audio</div>' +
+      '</div>' +
+      '<div class="reel-actions">' +
+        '<button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7.5-4.8-10-9.3C.5 7.8 3 4 7 4c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 4 0 6.5 3.8 5 7.7C19.5 16.2 12 21 12 21z"/></svg>Like</button>' +
+        '<button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 1 1-4-7.2L21 3l-1 5.5"/></svg>Share</button>' +
+      '</div>';
+
+    reel.querySelector('.play-toggle').addEventListener('click', function(){
+      reel.classList.toggle('paused');
+    });
+
+    reels.appendChild(reel);
+  });
+})();
+</script>
+</body>
+</html>
