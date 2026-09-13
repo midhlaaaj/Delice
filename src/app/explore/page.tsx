@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { ProductVisual } from "@/components/cake-visuals";
+import { ProductCard } from "@/components/product-card";
 import { getAllProducts } from "@/db/queries";
 
 export const metadata = {
   title: "Full Catalogue — Delice",
   description: "Every Delice cheesecake and bake, in one place.",
 };
-
-const CARD_PASTELS = ["bg-blush/30", "bg-orange/25", "bg-sage/25", "bg-rose/25"];
 
 export default async function ExploreAllPage({
   searchParams,
@@ -52,36 +50,8 @@ export default async function ExploreAllPage({
         </div>
 
         <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-          {filtered.map((p, i) => (
-            <Link
-              key={p.id}
-              href={`/product/${p.slug}`}
-              className="group flex flex-col rounded-2xl overflow-hidden bg-ac-surface-container-lowest shadow-[0_14px_28px_-18px_rgba(58,15,22,.35)] hover:shadow-[0_18px_32px_-16px_rgba(58,15,22,.4)] transition-shadow"
-            >
-              <div
-                className={`relative flex-none aspect-[4/3] flex items-center justify-center ${CARD_PASTELS[i % CARD_PASTELS.length]}`}
-              >
-                <ProductVisual
-                  product={p}
-                  imageUrl={p.imageThreeQuarterUrl}
-                  className="w-[78%] h-[78%] group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <div className="p-4 flex flex-col flex-1">
-                <h3 className="font-editorial text-[17px] text-ac-primary leading-tight">{p.name}</h3>
-                <p className="mt-1 font-humanist text-[12px] text-ac-on-surface-variant leading-snug line-clamp-1">
-                  {p.description}
-                </p>
-                <div className="mt-auto pt-3 flex items-center justify-between border-t border-ac-border-hairline">
-                  <span className="font-editorial text-[16px] font-bold text-ac-primary">
-                    {p.priceLabel}
-                  </span>
-                  <span className="font-humanist text-xs text-ac-secondary group-hover:translate-x-0.5 transition-transform">
-                    View →
-                  </span>
-                </div>
-              </div>
-            </Link>
+          {filtered.map((p) => (
+            <ProductCard key={p.id} product={p} variant="grid" />
           ))}
         </div>
       </section>

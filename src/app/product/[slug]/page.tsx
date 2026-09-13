@@ -7,6 +7,7 @@ import { ProductGallery } from "@/components/product-gallery";
 import { buildGalleryItems } from "@/lib/product-gallery";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { BOX_INFO } from "@/lib/product-info";
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -26,11 +27,6 @@ export async function generateMetadata({
     description: product.description,
   };
 }
-
-const BOX_INFO: Record<string, string> = {
-  cheesecake: "Whole box · 6 slices · Keep refrigerated",
-  bake: "Whole loaf · Serves 6–8 · Keep refrigerated",
-};
 
 export default async function ProductDetailPage({
   params,
@@ -72,34 +68,39 @@ export default async function ProductDetailPage({
             <div className="inline-block mt-4 font-editorial text-[15px] font-bold text-ac-primary border border-ac-border-hairline px-4.5 py-2 rounded-full">
               {product.priceLabel}
             </div>
-            <p className="mt-5 font-humanist text-[15.5px] leading-relaxed text-ac-on-surface-variant max-w-[440px]">
-              {product.description}
-            </p>
 
-            <div className="mt-5 font-humanist text-[13px] text-ac-on-surface-variant flex items-center gap-2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4 h-4 shrink-0">
-                <rect x="3" y="7" width="18" height="14" rx="2" />
-                <path d="M3 7l9-4 9 4" />
-              </svg>
-              {BOX_INFO[product.category] ?? BOX_INFO.cheesecake}
+            <div className="mt-5 flex items-center gap-3 rounded-xl border border-ac-border-hairline bg-ac-surface-container-low px-4 py-3.5">
+              <div className="shrink-0 w-9 h-9 rounded-full bg-ac-surface-container-lowest flex items-center justify-center text-ac-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="w-4.5 h-4.5">
+                  <rect x="3" y="7" width="18" height="14" rx="2" />
+                  <path d="M3 7l9-4 9 4" />
+                </svg>
+              </div>
+              <span className="font-humanist text-[13.5px] text-ac-primary font-medium">
+                {BOX_INFO[product.category] ?? BOX_INFO.cheesecake}
+              </span>
             </div>
 
-            <div className="flex gap-3 mt-7 flex-wrap">
+            <div className="flex gap-3 mt-5 flex-wrap">
               <Link
                 href="/stores"
-                className="bg-ac-primary text-ac-on-primary hover:bg-ac-secondary rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] transition-colors"
+                className="flex-1 sm:flex-none text-center bg-ac-primary text-ac-on-primary hover:bg-ac-secondary rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] font-medium transition-colors"
               >
                 Find near you
               </Link>
               <Link
                 href="/explore"
-                className="bg-ac-surface-container-lowest text-ac-primary border border-ac-border-hairline hover:bg-ac-surface-container rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] transition-colors"
+                className="flex-1 sm:flex-none text-center bg-ac-surface-container-lowest text-ac-primary border border-ac-border-hairline hover:bg-ac-surface-container rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] transition-colors"
               >
                 Back to all products
               </Link>
             </div>
 
-            <div className="mt-10 pt-8 border-t border-ac-border-hairline">
+            <p className="mt-7 font-humanist text-[15.5px] leading-relaxed text-ac-on-surface-variant max-w-[440px]">
+              {product.description}
+            </p>
+
+            <div className="mt-8 pt-6 border-t border-ac-border-hairline">
               <h2 className="font-humanist text-[13px] tracking-wide text-ac-on-surface-variant mb-4">
                 WHY YOU&apos;LL LOVE IT
               </h2>

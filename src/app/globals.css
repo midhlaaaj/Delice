@@ -130,8 +130,8 @@
   --color-ac-on-maroon-muted: var(--ac-on-maroon-muted);
   --color-ac-on-maroon-line: var(--ac-on-maroon-line);
 
-  --font-editorial: var(--font-newsreader);
-  --font-humanist: var(--font-jakarta);
+  --font-editorial: var(--font-fraunces);
+  --font-humanist: var(--font-instrument);
   --font-display: var(--font-modak);
 }
 

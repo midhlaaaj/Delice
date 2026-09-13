@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Instrument_Sans, Modak, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
+import { Fraunces, Instrument_Sans, Modak } from "next/font/google";
 import { HeroTransitionProvider } from "@/components/hero-transition";
 import "./globals.css";
 
@@ -12,19 +12,6 @@ const fraunces = Fraunces({
 
 const instrument = Instrument_Sans({
   variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -46,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${instrument.variable} ${newsreader.variable} ${jakarta.variable} ${modak.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${instrument.variable} ${modak.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <HeroTransitionProvider>{children}</HeroTransitionProvider>
