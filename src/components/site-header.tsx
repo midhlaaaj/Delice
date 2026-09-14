@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getSiteSettings } from "@/db/queries";
+import { SiteMobileMenu } from "@/components/site-mobile-menu";
 
 export async function SiteHeader() {
   const settings = await getSiteSettings();
@@ -36,13 +37,14 @@ export async function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="flex items-center justify-self-end">
+        <div className="flex items-center gap-2 justify-self-end">
           <Link
             href="/#partner-wholesale"
-            className="inline-flex items-center justify-center rounded-full bg-ac-maroon text-ac-on-maroon hover:bg-ac-maroon-deep transition-all shadow-[0_2px_8px_rgba(42,22,32,0.12)] px-5 py-2.5 font-humanist text-xs font-bold uppercase tracking-wide whitespace-nowrap"
+            className="hidden md:inline-flex items-center justify-center rounded-full bg-ac-maroon text-ac-on-maroon hover:bg-ac-maroon-deep transition-all shadow-[0_2px_8px_rgba(42,22,32,0.12)] px-5 py-2.5 font-humanist text-xs font-bold uppercase tracking-wide whitespace-nowrap"
           >
             Become a Partner
           </Link>
+          <SiteMobileMenu />
         </div>
       </div>
     </header>
