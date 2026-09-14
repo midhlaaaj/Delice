@@ -62,19 +62,28 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
   const overlapVideoUrl = settings.heroMediaType === "video" ? settings.heroDesktopUrl : null;
 
   return (
-    <section className="relative w-full overflow-hidden bg-ac-maroon flex flex-col min-h-[calc(100svh-80px)]">
+    <section className="relative isolate w-full overflow-hidden bg-ac-maroon flex flex-col min-h-[calc(100svh-80px)]">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.16] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeGaussianBlur stdDeviation='0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundRepeat: "repeat",
+        }}
+      />
       <Ticker />
 
       <div className="relative flex-1 flex flex-col justify-center py-10">
-        <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8 opacity-90">
+        <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8 opacity-90 blur-[3px] sm:blur-[4px]">
           <MarqueeRow duration="34s" />
           <MarqueeRow duration="30s" reverse />
           <MarqueeRow duration="38s" />
         </div>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+        <div className="absolute inset-0 flex items-center justify-center px-6 pb-20 sm:pb-28">
           <div
-            className="relative w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] flex items-center justify-center overflow-hidden"
+            className="relative w-[400px] h-[400px] sm:w-[560px] sm:h-[560px] lg:w-[680px] lg:h-[680px] flex items-center justify-center overflow-hidden"
             style={{ borderRadius: "63% 37% 54% 46% / 43% 39% 61% 57%" }}
           >
             {overlapVideoUrl ? (
@@ -93,10 +102,12 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
               <div className="w-full h-full bg-gradient-to-br from-ac-secondary-container via-ac-secondary to-ac-maroon-deep" />
             )}
           </div>
+        </div>
 
+        <div className="absolute inset-x-0 bottom-20 sm:bottom-28 flex justify-center px-6 text-center">
           <Link
             href="/explore"
-            className="mt-6 inline-flex items-center justify-center rounded-full bg-ac-on-maroon text-ac-maroon px-7 py-3.5 font-humanist text-sm font-semibold shadow-lg hover:bg-white transition-all"
+            className="inline-flex items-center justify-center rounded-full bg-ac-on-maroon text-ac-maroon px-7 py-3.5 font-humanist text-sm font-semibold shadow-lg hover:bg-white transition-all"
           >
             Explore Flavors
           </Link>
