@@ -59,6 +59,27 @@ export function StatusPill({ tone, label }: { tone: "positive" | "neutral" | "wa
   );
 }
 
+export function ToggleField({
+  name,
+  label,
+  defaultChecked = false,
+}: {
+  name: string;
+  label: string;
+  defaultChecked?: boolean;
+}) {
+  return (
+    <label className="flex items-center justify-between gap-4 cursor-pointer select-none">
+      <span className="font-humanist text-sm text-ac-on-surface">{label}</span>
+      <span className="relative inline-flex shrink-0">
+        <input type="checkbox" name={name} defaultChecked={defaultChecked} className="peer sr-only" />
+        <span className="block w-10 h-6 rounded-full bg-ac-surface-container border border-ac-border-hairline transition-colors peer-checked:bg-ac-maroon peer-checked:border-ac-maroon peer-focus-visible:ring-2 peer-focus-visible:ring-ac-secondary/40" />
+        <span className="absolute top-[3px] left-[3px] w-[18px] h-[18px] bg-white rounded-full shadow-[0_1px_2px_rgba(42,22,32,0.3)] transition-transform peer-checked:translate-x-[16px]" />
+      </span>
+    </label>
+  );
+}
+
 export function AdminList({
   items,
   emptyLabel,

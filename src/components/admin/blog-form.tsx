@@ -6,7 +6,7 @@ import { ImageUploadField } from "./image-upload-field";
 import { FallbackColorField } from "./fallback-color-field";
 import { BlogPreviewCard } from "./blog-preview-card";
 import { Button } from "@/components/button";
-import { adminInput, adminLabel } from "./admin-ui";
+import { adminInput, adminLabel, ToggleField } from "./admin-ui";
 import type { BlogPost } from "@/db/schema";
 
 export function BlogForm({ post }: { post?: BlogPost }) {
@@ -111,10 +111,7 @@ export function BlogForm({ post }: { post?: BlogPost }) {
           <input name="sortOrder" type="number" defaultValue={post?.sortOrder ?? 0} className={`${adminInput} w-32`} />
         </div>
 
-        <label className="flex items-center gap-2 font-humanist text-sm text-ac-on-surface">
-          <input type="checkbox" name="isPublished" defaultChecked={post?.isPublished ?? true} />
-          Published
-        </label>
+        <ToggleField name="isPublished" label="Published" defaultChecked={post?.isPublished ?? true} />
 
         <Button type="submit" className="w-fit">
           Save post

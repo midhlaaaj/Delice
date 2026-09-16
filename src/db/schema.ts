@@ -25,6 +25,10 @@ export const siteSettings = pgTable("site_settings", {
   heroMobileUrl: text("hero_mobile_url"),
   trustTagText: text("trust_tag_text"),
   trustTagItems: text("trust_tag_items").array().notNull().default([]),
+  defaultHighlights: text("default_highlights")
+    .array()
+    .notNull()
+    .default(["Made fresh to order, never frozen", "No artificial preservatives", "Boxed by hand, ready to gift"]),
   // superseded by heroBgLines (kept, unused, to avoid an ambiguous rename migration)
   heroBgText: text("hero_bg_text").notNull().default("Slice of Happiness"),
   heroBgLines: text("hero_bg_lines")
@@ -42,6 +46,7 @@ export const products = pgTable("products", {
   kicker: text("kicker"),
   priceLabel: text("price_label").notNull(),
   description: text("description").notNull(),
+  highlights: text("highlights").array().notNull().default([]),
 
   // asset urls (R2-hosted); nullable until real photos are shot
   imageTopUrl: text("image_top_url"),

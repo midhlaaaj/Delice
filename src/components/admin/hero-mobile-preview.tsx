@@ -28,6 +28,7 @@ export function HeroMobilePreview({
     heroMobileUrl: null,
     trustTagText: null,
     trustTagItems,
+    defaultHighlights: [],
     heroBgText: bgLines[0] ?? "Slice of Happiness",
     heroBgLines: bgLines,
     updatedAt: new Date(),

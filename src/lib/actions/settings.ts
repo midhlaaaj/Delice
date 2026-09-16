@@ -45,3 +45,20 @@ export async function updateHeroSection(formData: FormData) {
   revalidatePath("/admin/hero");
   redirect("/admin/hero");
 }
+
+export async function updateDefaultHighlights(formData: FormData) {
+  await requireAdmin();
+
+  const defaultHighlights = formData
+    .getAll("highlights")
+    .map((v) => String(v).trim())
+    .filter(Boolean);
+
+  await db
+    .insert(siteSettings)
+    .values({ id: "default", defaultHighlights })
+    .onConflictDoUpdate({ target: siteSettings.id, set: { defaultHighlights, updatedAt: new Date() } });
+
+  revalidatePath("/admin/products");
+  redirect("/admin/products");
+}

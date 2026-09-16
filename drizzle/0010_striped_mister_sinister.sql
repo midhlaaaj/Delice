@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "highlights" text[] DEFAULT '{}' NOT NULL;

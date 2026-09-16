@@ -1,7 +1,7 @@
 import { upsertStore } from "@/lib/actions/stores";
 import { LocationField } from "./location-field";
 import { Button } from "@/components/button";
-import { adminInput, adminLabel } from "./admin-ui";
+import { adminInput, adminLabel, ToggleField } from "./admin-ui";
 import type { Store } from "@/db/schema";
 
 export function StoreForm({ store }: { store?: Store }) {
@@ -26,15 +26,17 @@ export function StoreForm({ store }: { store?: Store }) {
 
       <LocationField defaultLat={store?.lat} defaultLng={store?.lng} defaultMapsUrl={store?.googleMapsUrl} />
 
-      <div className="flex flex-col gap-2.5">
-        <label className="flex items-center gap-2 font-humanist text-sm text-ac-on-surface">
-          <input type="checkbox" name="isOwnOutlet" defaultChecked={store?.isOwnOutlet} />
-          This is our own outlet (not a partner shop)
-        </label>
-        <label className="flex items-center gap-2 font-humanist text-sm text-ac-on-surface">
-          <input type="checkbox" name="isApproved" defaultChecked={store?.isApproved ?? true} />
-          Approved (visible on the site)
-        </label>
+      <div className="flex flex-col gap-3">
+        <ToggleField
+          name="isOwnOutlet"
+          label="This is our own outlet (not a partner shop)"
+          defaultChecked={store?.isOwnOutlet ?? false}
+        />
+        <ToggleField
+          name="isApproved"
+          label="Approved (visible on the site)"
+          defaultChecked={store?.isApproved ?? true}
+        />
       </div>
 
       <Button type="submit" className="w-fit">

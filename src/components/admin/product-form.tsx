@@ -4,12 +4,13 @@ import { useState } from "react";
 import { upsertProduct } from "@/lib/actions/products";
 import { MediaUploadField } from "./media-upload-field";
 import { FallbackColorField } from "./fallback-color-field";
+import { HighlightsField } from "./highlights-field";
 import { ProductPreviewCard } from "./product-preview-card";
 import { Button } from "@/components/button";
-import { adminInput, adminLabel } from "./admin-ui";
+import { adminInput, adminLabel, ToggleField } from "./admin-ui";
 import type { Product } from "@/db/schema";
 
-export function ProductForm({ product }: { product?: Product }) {
+export function ProductForm({ product, defaultHighlights }: { product?: Product; defaultHighlights: string[] }) {
   const [name, setName] = useState(product?.name ?? "");
   const [priceValue, setPriceValue] = useState((product?.priceLabel ?? "").replace(/^₹\s*/, ""));
   const priceLabel = `₹${priceValue}`;
@@ -79,6 +80,8 @@ export function ProductForm({ product }: { product?: Product }) {
           <textarea name="description" defaultValue={product?.description} required rows={3} className={adminInput} />
         </div>
 
+        <HighlightsField defaultItems={product?.highlights ?? defaultHighlights} />
+
         <FallbackColorField
           defaultFrom={product?.colorFrom}
           defaultTo={product?.colorTo}
@@ -100,16 +103,7 @@ export function ProductForm({ product }: { product?: Product }) {
 
         <input type="hidden" name="sortOrder" value={product?.sortOrder ?? 0} />
 
-        <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2 font-humanist text-sm text-ac-on-surface">
-            <input type="checkbox" name="isFeaturedOnWheel" defaultChecked={product?.isFeaturedOnWheel} />
-            Show on homepage wheel
-          </label>
-          <label className="flex items-center gap-2 font-humanist text-sm text-ac-on-surface">
-            <input type="checkbox" name="isPublished" defaultChecked={product?.isPublished ?? true} />
-            Published
-          </label>
-        </div>
+        <ToggleField name="isPublished" label="Published" defaultChecked={product?.isPublished ?? true} />
 
         <Button type="submit" className="w-fit">
           Save product

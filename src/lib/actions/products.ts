@@ -40,12 +40,17 @@ export async function upsertProduct(formData: FormData) {
 
   const id = str(formData, "id");
   const name = str(formData, "name");
+  const highlights = formData
+    .getAll("highlights")
+    .map((v) => String(v).trim())
+    .filter(Boolean);
   const values = {
     name,
     category: str(formData, "category") as "cheesecake" | "bake",
     kicker: str(formData, "kicker") || null,
     priceLabel: str(formData, "priceLabel"),
     description: str(formData, "description"),
+    highlights,
     colorFrom: str(formData, "colorFrom") || null,
     colorTo: str(formData, "colorTo") || null,
     imageTopUrl: str(formData, "imageTopUrl") || null,
@@ -53,7 +58,6 @@ export async function upsertProduct(formData: FormData) {
     imageThreeQuarterUrl: str(formData, "imageThreeQuarterUrl") || null,
     transitionVideoUrl: str(formData, "transitionVideoUrl") || null,
     sortOrder: Number(str(formData, "sortOrder") || "0"),
-    isFeaturedOnWheel: formData.get("isFeaturedOnWheel") === "on",
     isPublished: formData.get("isPublished") === "on",
     updatedAt: new Date(),
   };

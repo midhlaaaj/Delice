@@ -93,6 +93,11 @@ export async function getSiteSettings() {
       heroMobileUrl: null,
       trustTagText: null,
       trustTagItems: [],
+      defaultHighlights: [
+        "Made fresh to order, never frozen",
+        "No artificial preservatives",
+        "Boxed by hand, ready to gift",
+      ],
       heroBgText: "Slice of Happiness",
       heroBgLines: ["Slice of Happiness", "Slice of Happiness", "Slice of Happiness"],
       updatedAt: new Date(),

@@ -95,25 +95,21 @@ export default async function ProductDetailPage({
               {product.description}
             </p>
 
-            <div className="mt-8 pt-6 border-t border-ac-border-hairline">
-              <h2 className="font-humanist text-[13px] tracking-wide text-ac-on-surface-variant mb-4">
-                WHY YOU&apos;LL LOVE IT
-              </h2>
-              <ul className="grid gap-3.5 font-humanist text-[14.5px] text-ac-on-surface-variant">
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-ac-secondary shrink-0" />
-                  Made fresh to order, never frozen
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-ac-secondary shrink-0" />
-                  No artificial preservatives
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="mt-1.5 w-1 h-1 rounded-full bg-ac-secondary shrink-0" />
-                  Boxed by hand, ready to gift
-                </li>
-              </ul>
-            </div>
+            {product.highlights.length > 0 && (
+              <div className="mt-8 pt-6 border-t border-ac-border-hairline">
+                <h2 className="font-humanist text-[13px] tracking-wide text-ac-on-surface-variant mb-4">
+                  WHY YOU&apos;LL LOVE IT
+                </h2>
+                <ul className="grid gap-3.5 font-humanist text-[14.5px] text-ac-on-surface-variant">
+                  {product.highlights.map((point) => (
+                    <li key={point} className="flex items-start gap-2.5">
+                      <span className="mt-1.5 w-1 h-1 rounded-full bg-ac-secondary shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 

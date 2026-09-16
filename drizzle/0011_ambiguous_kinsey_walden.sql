@@ -1,0 +1,2 @@
+ALTER TABLE "site_settings" ADD COLUMN "default_highlights" text[] DEFAULT '{"Made fresh to order, never frozen","No artificial preservatives","Boxed by hand, ready to gift"}' NOT NULL;--> statement-breakpoint
+UPDATE "products" SET "highlights" = '{"Made fresh to order, never frozen","No artificial preservatives","Boxed by hand, ready to gift"}' WHERE "highlights" = '{}';

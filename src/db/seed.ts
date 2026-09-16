@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs";
 import { db } from "./index";
 import { products, stores, ugcVideos, adminUsers, blogPosts } from "./schema";
 
+const DEFAULT_HIGHLIGHTS = ["Made fresh to order, never frozen", "No artificial preservatives", "Boxed by hand, ready to gift"];
+
 const CHEESECAKES = [
   {
     slug: "vanilla",
@@ -70,6 +72,7 @@ const CHEESECAKES = [
   ...p,
   category: "cheesecake" as const,
   isFeaturedOnWheel: p.slug !== "strawberry",
+  highlights: DEFAULT_HIGHLIGHTS,
 }));
 
 const BAKES = [
@@ -107,6 +110,7 @@ const BAKES = [
   ...p,
   category: "bake" as const,
   isFeaturedOnWheel: false,
+  highlights: DEFAULT_HIGHLIGHTS,
 }));
 
 const STORES = [
