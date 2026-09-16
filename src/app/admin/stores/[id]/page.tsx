@@ -15,7 +15,7 @@ export default async function EditStorePage({
 
   return (
     <div>
-      <h1 className="font-serif text-2xl text-plum mb-6">Edit {store.name}</h1>
+      <h1 className="font-editorial text-2xl text-ac-primary mb-6">Edit {store.name}</h1>
       <StoreForm store={store} />
     </div>
   );

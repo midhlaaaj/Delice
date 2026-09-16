@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import type { Store } from "@/db/schema";
+import { Button } from "@/components/button";
+import { EmptyState } from "@/components/empty-state";
 
 const PAGE_SIZE = 20;
 
@@ -110,13 +112,9 @@ export function StoreDirectory({ stores }: { stores: Store[] }) {
           placeholder="Search by store, area, or city"
           className="flex-1 min-w-[180px] bg-ac-surface-container-low border border-ac-border-hairline rounded-full px-4.5 py-3 font-humanist text-ac-primary text-sm placeholder:text-ac-on-surface-variant/60 outline-none focus:border-ac-secondary transition-colors"
         />
-        <button
-          onClick={useMyLocation}
-          disabled={locating}
-          className="bg-ac-primary text-ac-on-primary hover:bg-ac-secondary border-none rounded-full px-5 py-3 font-humanist text-sm whitespace-nowrap disabled:opacity-60 transition-colors"
-        >
+        <Button onClick={useMyLocation} disabled={locating} variant="solid" size="sm" className="disabled:opacity-60">
           {locating ? "Locating…" : "Use my location"}
-        </button>
+        </Button>
       </div>
       {error && <p className="font-humanist text-ac-secondary text-xs mt-2">{error}</p>}
 
@@ -126,7 +124,11 @@ export function StoreDirectory({ stores }: { stores: Store[] }) {
 
       <div className="mt-3 grid gap-3">
         {pageItems.length === 0 && (
-          <p className="font-humanist text-ac-on-surface-variant text-sm">No stores match that search yet.</p>
+          <EmptyState
+            title="No stores match that search"
+            description="Try a different town, area, or pincode — or clear your search to see every store."
+            cta={{ label: "Clear search", onClick: () => handleSearchChange("") }}
+          />
         )}
         {pageItems.map((store) => {
           const dist = origin

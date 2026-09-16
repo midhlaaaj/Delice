@@ -24,6 +24,13 @@ export const siteSettings = pgTable("site_settings", {
   heroDesktopUrl: text("hero_desktop_url"),
   heroMobileUrl: text("hero_mobile_url"),
   trustTagText: text("trust_tag_text"),
+  trustTagItems: text("trust_tag_items").array().notNull().default([]),
+  // superseded by heroBgLines (kept, unused, to avoid an ambiguous rename migration)
+  heroBgText: text("hero_bg_text").notNull().default("Slice of Happiness"),
+  heroBgLines: text("hero_bg_lines")
+    .array()
+    .notNull()
+    .default(["Slice of Happiness", "Slice of Happiness", "Slice of Happiness"]),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
@@ -47,6 +54,7 @@ export const products = pgTable("products", {
   colorTo: text("color_to"),
 
   sortOrder: integer("sort_order").notNull().default(0),
+  wheelSortOrder: integer("wheel_sort_order").notNull().default(0),
   isFeaturedOnWheel: boolean("is_featured_on_wheel").notNull().default(false),
   isPublished: boolean("is_published").notNull().default(true),
 
@@ -72,6 +80,29 @@ export const stores = pgTable(
   },
   (table) => [uniqueIndex("stores_name_address_unique").on(table.name, table.addressLine)]
 );
+
+export const blogPosts = pgTable("blog_posts", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  category: text("category").notNull().default("Journal"),
+  excerpt: text("excerpt").notNull(),
+  content: text("content").notNull(),
+  author: text("author").notNull().default("Team Delice"),
+  readMinutes: integer("read_minutes").notNull().default(4),
+
+  coverImageUrl: text("cover_image_url"),
+  // fallback gradient swatch for cards/covers before a real photo exists
+  colorFrom: text("color_from"),
+  colorTo: text("color_to"),
+
+  sortOrder: integer("sort_order").notNull().default(0),
+  isPublished: boolean("is_published").notNull().default(true),
+  publishedAt: timestamp("published_at").notNull().defaultNow(),
+
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
 
 export const ugcVideos = pgTable(
   "ugc_videos",
@@ -116,6 +147,8 @@ export type Store = typeof stores.$inferSelect;
 export type NewStore = typeof stores.$inferInsert;
 export type UgcVideo = typeof ugcVideos.$inferSelect;
 export type NewUgcVideo = typeof ugcVideos.$inferInsert;
+export type BlogPost = typeof blogPosts.$inferSelect;
+export type NewBlogPost = typeof blogPosts.$inferInsert;
 export type SiteSettings = typeof siteSettings.$inferSelect;
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type MediaBlob = typeof mediaBlobs.$inferSelect;

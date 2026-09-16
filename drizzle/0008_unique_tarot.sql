@@ -1,0 +1,2 @@
+ALTER TABLE "site_settings" ADD COLUMN "trust_tag_items" text[] DEFAULT '{}' NOT NULL;--> statement-breakpoint
+ALTER TABLE "site_settings" ADD COLUMN "hero_bg_text" text DEFAULT 'Slice of Happiness' NOT NULL;

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { ProductCard } from "@/components/product-card";
+import { EmptyState } from "@/components/empty-state";
 import { getAllProducts } from "@/db/queries";
 
 export const metadata = {
@@ -49,11 +50,19 @@ export default async function ExploreAllPage({
           ))}
         </div>
 
-        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} variant="grid" />
-          ))}
-        </div>
+        {filtered.length > 0 ? (
+          <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
+            {filtered.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title="Nothing here yet"
+            description="We don't have any flavors in this category right now — check back soon or browse everything we make."
+            cta={{ label: "View all flavors", href: "/explore" }}
+          />
+        )}
       </section>
       <SiteFooter />
     </>

@@ -43,6 +43,34 @@
       "when": 1789020105249,
       "tag": "0005_oval_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789474042661,
+      "tag": "0006_flawless_genesis",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789481091265,
+      "tag": "0007_past_zeigeist",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789481508620,
+      "tag": "0008_unique_tarot",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789483017054,
+      "tag": "0009_windy_moira_mactaggert",
+      "breakpoints": true
     }
   ]
 }

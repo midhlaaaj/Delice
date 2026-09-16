@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { db } from "./index";
-import { products, stores, ugcVideos, adminUsers } from "./schema";
+import { products, stores, ugcVideos, adminUsers, blogPosts } from "./schema";
 
 const CHEESECAKES = [
   {
@@ -175,6 +175,85 @@ const VIDEOS = [
   sortOrder: i,
 }));
 
+const BLOG_POSTS = [
+  {
+    slug: "how-we-bake-cheesecake-that-travels",
+    title: "How we bake a cheesecake that survives a Kerala delivery route",
+    category: "Behind the Scenes",
+    excerpt:
+      "Chilled counters, monsoon traffic, and a three-times-a-week delivery run — here's what actually goes into a cheesecake sturdy enough to make it to your shop.",
+    author: "Team Delice",
+    readMinutes: 5,
+    colorFrom: "#EFC3CD",
+    colorTo: "#D68C9E",
+    content: `Most cheesecake recipes are written for a kitchen that's ten steps from the fridge. Ours has to survive a chiller van, a handoff at five different stops, and whatever the Kozhikode traffic decides to do that afternoon.
+
+That constraint shaped almost every decision in our recipe. We bake at a slightly lower temperature for longer, which gives the custard a denser, more stable set — it holds its shape through vibration instead of turning grainy. The biscuit base gets an extra few minutes under the broiler so it doesn't go soft from condensation inside the box.
+
+Boxing is its own discipline. Every cheesecake goes into its box only after a full four hours in the chiller, never straight from the oven cooling rack. Boxing warm cheesecake traps steam, and trapped steam is the single biggest reason a cheesecake arrives looking sad.
+
+None of this is complicated. It's just the difference between a recipe built for a plate and a recipe built for a delivery route — and once you start baking for the second one, you don't really go back.`,
+    sortOrder: 0,
+  },
+  {
+    slug: "picking-the-next-flavor",
+    title: "How a new Delice flavor actually gets picked",
+    category: "Journal",
+    excerpt:
+      "Pistachio Kunafa didn't start as a plan — it started as a tray of six failed versions and one very loud argument about how much rose water is too much.",
+    author: "Team Delice",
+    readMinutes: 4,
+    colorFrom: "#A9B98E",
+    colorTo: "#6E7E55",
+    content: `We don't run flavor votes or trend reports. A new flavor usually starts because someone on the team won't stop talking about something they ate — kunafa at a wedding, a caramel milk cake from a Manila bakery video, whatever.
+
+From there it's a lot of small trays. Pistachio Kunafa went through six versions before it shipped. The first attempt had too much syrup and slid off the base. The third had the balance right but the kunafa strands went soft overnight. Version five was nearly it, except for a rose water disagreement that took two more batches to settle.
+
+What we're actually testing for isn't taste on day one — anyone can make something taste good fresh out of the oven. We're testing taste on day two, after a night in the chiller and a morning in a delivery box, because that's the version our customers actually eat.
+
+If a flavor survives that gauntlet and the whole team still wants a second slice a week later, it goes on the wheel.`,
+    sortOrder: 1,
+  },
+  {
+    slug: "reading-a-delice-box",
+    title: "What all those little icons on the box actually mean",
+    category: "Guide",
+    excerpt:
+      "Rich & creamy, made with real cheese, premium quality — a quick guide to what we're actually promising on every Delice box.",
+    author: "Team Delice",
+    readMinutes: 3,
+    colorFrom: "#DE8A4C",
+    colorTo: "#C96B32",
+    content: `Every Delice box carries the same three small icons, and we get asked about them often enough that they deserve an explanation.
+
+"Rich & Creamy" is a texture promise, not a flavor one — it's there because our base recipe uses more cream cheese per slice than most bakery versions, which is also why our cheesecakes are priced where they are.
+
+"Made With Real Cheese" sounds obvious until you've tasted the alternative. A lot of budget cheesecake in India is made with a vegetable-fat substitute that never fully sets the same way. Every Delice batch starts with actual cream cheese, full stop.
+
+"Premium Quality" is the vaguest of the three and the one we take most seriously internally — it's our own shorthand for the whole standard behind this journal: real ingredients, a delivery process built to protect the product, and a flavor that isn't allowed to ship until it survives a night in the chiller.
+
+Next time you're holding a box, that's what those three little stamps are actually saying.`,
+    sortOrder: 2,
+  },
+  {
+    slug: "why-we-still-hand-deliver",
+    title: "Why we still hand-deliver three times a week instead of scaling faster",
+    category: "News",
+    excerpt:
+      "We could ship further, less often, with a courier. We tried it once. Here's why we went back to our own chilled van and a fixed weekly route.",
+    author: "Team Delice",
+    readMinutes: 4,
+    colorFrom: "#7C4667",
+    colorTo: "#2A1620",
+    content: `Early on, we tried handing deliveries to a third-party courier to cover more ground faster. It lasted about six weeks. The cheesecakes arrived, technically — but "technically arrived" and "arrived the way we'd want to eat it" turned out to be very different standards once temperature control wasn't ours to control anymore.
+
+So we went back to running our own chilled route, three times a week, to every store on our list. It's slower to expand this way. Every new city means a new van and a new relationship with a driver who understands that a five-minute delay at one stop isn't a big deal, but leaving a box sitting in the sun while double-parked outside a store is.
+
+It also means we say no to some requests — areas we can't reach on our current route don't get Delice yet, even if a shop there wants to carry us. We'd rather grow slower and keep every box as good as the one that leaves our kitchen than expand into a version of the product we wouldn't want to eat ourselves.`,
+    sortOrder: 3,
+  },
+].map((p) => ({ ...p, isPublished: true }));
+
 async function main() {
   console.log("Seeding products...");
   await db.insert(products).values([...CHEESECAKES, ...BAKES]).onConflictDoNothing({
@@ -189,6 +268,11 @@ async function main() {
   console.log("Seeding UGC videos...");
   await db.insert(ugcVideos).values(VIDEOS).onConflictDoNothing({
     target: [ugcVideos.handle, ugcVideos.caption],
+  });
+
+  console.log("Seeding blog posts...");
+  await db.insert(blogPosts).values(BLOG_POSTS).onConflictDoNothing({
+    target: blogPosts.slug,
   });
 
   const adminEmail = process.env.SEED_ADMIN_EMAIL;

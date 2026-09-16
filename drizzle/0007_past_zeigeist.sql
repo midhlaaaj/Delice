@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "wheel_sort_order" integer DEFAULT 0 NOT NULL;

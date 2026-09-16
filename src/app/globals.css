@@ -80,7 +80,7 @@
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-line: var(--line);
-  --font-serif: var(--font-fraunces);
+  --font-serif: var(--font-instrument);
   --font-sans: var(--font-instrument);
 
   --color-ac-surface: var(--ac-surface);
@@ -130,7 +130,7 @@
   --color-ac-on-maroon-muted: var(--ac-on-maroon-muted);
   --color-ac-on-maroon-line: var(--ac-on-maroon-line);
 
-  --font-editorial: var(--font-fraunces);
+  --font-editorial: var(--font-instrument);
   --font-humanist: var(--font-instrument);
   --font-display: var(--font-modak);
 }
@@ -147,7 +147,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-fraunces), serif;
+  font-family: var(--font-instrument), sans-serif;
   letter-spacing: -0.01em;
 }
 
@@ -168,4 +168,36 @@ h1, h2, h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
+}
+
+@keyframes float-3d {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes float-3d-shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.3; }
+  50% { transform: scaleX(0.8); opacity: 0.15; }
+}
+
+.animate-float-3d {
+  animation: float-3d 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-float-3d-shadow {
+  animation: float-3d-shadow 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-3d,
+  .animate-float-3d-shadow {
+    animation: none;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
+import { PasswordField } from "@/components/admin/password-field";
+import { adminInput, adminLabel } from "@/components/admin/admin-ui";
+import { Button } from "@/components/button";
 
 export const metadata = { title: "Admin login — Delice" };
 
@@ -31,42 +34,35 @@ export default async function AdminLoginPage({
   const { error } = await searchParams;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cream px-6">
-      <form action={loginAction} className="w-full max-w-sm bg-paper rounded-2xl p-8 border border-line">
-        <h1 className="font-serif text-2xl text-plum mb-1">Delice admin</h1>
-        <p className="text-sm text-ink/60 mb-6">Sign in to manage products, stores, and videos.</p>
+    <div className="min-h-screen flex items-center justify-center bg-ac-background px-6">
+      <form
+        action={loginAction}
+        className="w-full max-w-sm bg-ac-surface-container-lowest rounded-2xl p-8 border border-ac-border-hairline shadow-[0_20px_50px_-30px_rgba(42,22,32,0.35)]"
+      >
+        <h1 className="font-editorial text-2xl text-ac-primary mb-1">Delice admin</h1>
+        <p className="font-humanist text-sm text-ac-on-surface-variant mb-6">
+          Sign in to manage products, stores, and videos.
+        </p>
 
         {error && (
-          <p className="text-sm text-rose mb-4 bg-rose/10 border border-rose/30 rounded-lg px-3 py-2">
+          <p className="font-humanist text-sm text-ac-rose mb-4 bg-ac-rose/10 border border-ac-rose/25 rounded-lg px-3 py-2">
             Invalid email or password.
           </p>
         )}
 
-        <label className="block text-sm text-ink/70 mb-1.5" htmlFor="email">
+        <label className={adminLabel} htmlFor="email">
           Email
         </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          className="w-full border border-line rounded-lg px-3.5 py-2.5 mb-4 text-sm outline-none focus:border-plum-soft"
-        />
+        <input id="email" name="email" type="email" required className={`${adminInput} mb-4`} />
 
-        <label className="block text-sm text-ink/70 mb-1.5" htmlFor="password">
+        <label className={adminLabel} htmlFor="password">
           Password
         </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          className="w-full border border-line rounded-lg px-3.5 py-2.5 mb-6 text-sm outline-none focus:border-plum-soft"
-        />
+        <PasswordField id="password" name="password" />
 
-        <button type="submit" className="w-full bg-plum text-cream rounded-full py-3 text-sm">
+        <Button type="submit" className="w-full justify-center">
           Sign in
-        </button>
+        </Button>
       </form>
     </div>
   );

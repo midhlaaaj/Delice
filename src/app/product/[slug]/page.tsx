@@ -8,6 +8,7 @@ import { buildGalleryItems } from "@/lib/product-gallery";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BOX_INFO } from "@/lib/product-info";
+import { Button } from "@/components/button";
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -44,7 +45,7 @@ export default async function ProductDetailPage({
     <>
       <SiteHeader />
 
-      <div className="w-full max-w-[1160px] mx-auto px-6 pt-24 md:pt-32 pb-20">
+      <div className="w-full max-w-[1160px] mx-auto px-6 pt-32 pb-20">
         <Link
           href="/explore"
           className="inline-flex items-center gap-2 font-humanist text-sm text-ac-on-surface-variant hover:text-ac-on-surface transition-colors mb-6 md:mb-10"
@@ -58,7 +59,7 @@ export default async function ProductDetailPage({
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr] lg:gap-16">
           <ProductGallery items={galleryItems} />
 
-          <div className="md:sticky md:top-28 md:self-start">
+          <div>
             <div className="font-humanist text-xs uppercase tracking-widest text-ac-secondary font-semibold mb-2">
               {product.kicker}
             </div>
@@ -82,18 +83,12 @@ export default async function ProductDetailPage({
             </div>
 
             <div className="flex gap-3 mt-5 flex-wrap">
-              <Link
-                href="/stores"
-                className="flex-1 sm:flex-none text-center bg-ac-primary text-ac-on-primary hover:bg-ac-secondary rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] font-medium transition-colors"
-              >
+              <Button href="/stores" variant="solid" className="flex-1 sm:flex-none">
                 Find near you
-              </Link>
-              <Link
-                href="/explore"
-                className="flex-1 sm:flex-none text-center bg-ac-surface-container-lowest text-ac-primary border border-ac-border-hairline hover:bg-ac-surface-container rounded-full px-6.5 py-3.5 font-humanist text-[14.5px] transition-colors"
-              >
+              </Button>
+              <Button href="/explore" variant="outline" className="flex-1 sm:flex-none">
                 Back to all products
-              </Link>
+              </Button>
             </div>
 
             <p className="mt-7 font-humanist text-[15.5px] leading-relaxed text-ac-on-surface-variant max-w-[440px]">
@@ -127,11 +122,11 @@ export default async function ProductDetailPage({
           <div className="flex gap-3.5 overflow-x-auto pb-2 [scrollbar-width:none]">
             {others.map((p) => (
               <Link key={p.id} href={`/product/${p.slug}`} className="flex-none w-[130px] text-center group">
-                <div className="rounded-2xl bg-ac-surface-container-low flex items-center justify-center w-22 h-19.5 mx-auto mb-2.5 overflow-hidden">
+                <div className="relative rounded-2xl bg-ac-surface-container-low w-22 h-19.5 mx-auto mb-2.5 overflow-hidden">
                   <ProductVisual
                     product={p}
                     imageUrl={p.imageThreeQuarterUrl}
-                    className="w-[70%] h-[70%] group-hover:scale-105 transition-transform duration-300"
+                    className="group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <span className="font-humanist text-[12.5px] text-ac-on-surface-variant">{p.name}</span>

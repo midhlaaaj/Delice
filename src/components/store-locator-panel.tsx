@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import type { Store } from "@/db/schema";
+import { Button } from "@/components/button";
+import { EmptyState } from "@/components/empty-state";
 
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number) {
   const R = 6371;
@@ -92,13 +94,14 @@ export function StoreLocatorPanel({ stores, limit }: { stores: Store[]; limit?: 
             className="w-full bg-transparent border-none text-ac-on-primary placeholder:text-ac-surface-container-high/40 font-humanist text-sm focus:outline-none"
           />
         </div>
-        <button
+        <Button
           onClick={useMyLocation}
           disabled={locating}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-ac-secondary text-ac-on-primary px-7 py-3 font-humanist text-sm hover:bg-ac-secondary-container transition-all shadow-md disabled:opacity-60 whitespace-nowrap"
+          variant="inverse"
+          className="gap-2 disabled:opacity-60"
         >
           {locating ? "Locating…" : "Use GPS"}
-        </button>
+        </Button>
       </div>
       {error && <p className="text-ac-secondary-container text-xs text-center -mt-3">{error}</p>}
 
@@ -119,9 +122,12 @@ export function StoreLocatorPanel({ stores, limit }: { stores: Store[]; limit?: 
 
       <div className="space-y-3">
         {filtered.length === 0 && (
-          <p className="text-ac-surface-container-high/70 text-sm text-center">
-            No stores match that search yet.
-          </p>
+          <EmptyState
+            tone="dark"
+            title="No stores match that search"
+            description="Try a different town, area, or pincode — or clear your search to see every store."
+            cta={{ label: "Clear search", onClick: () => setSearch("") }}
+          />
         )}
         {filtered.map((store) => {
           const dist = origin

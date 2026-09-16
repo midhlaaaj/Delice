@@ -15,40 +15,33 @@ function str(formData: FormData, key: string): string {
   return String(formData.get(key) ?? "").trim();
 }
 
-export async function updateHeroMedia(formData: FormData) {
+export async function updateHeroSection(formData: FormData) {
   await requireAdmin();
 
   const heroMediaType = str(formData, "heroMediaType") as "none" | "image" | "video";
   const heroDesktopUrl = str(formData, "heroDesktopUrl") || null;
   const heroMobileUrl = str(formData, "heroMobileUrl") || null;
+  const heroBgLines = [1, 2, 3].map((n) => str(formData, `heroBgLine${n}`) || "Slice of Happiness");
+  const trustTagItems = formData
+    .getAll("trustTagItems")
+    .map((v) => String(v).trim())
+    .filter(Boolean);
+
+  const values = {
+    heroMediaType,
+    heroDesktopUrl,
+    heroMobileUrl,
+    heroBgLines,
+    trustTagItems,
+    updatedAt: new Date(),
+  };
 
   await db
     .insert(siteSettings)
-    .values({ id: "default", heroMediaType, heroDesktopUrl, heroMobileUrl, updatedAt: new Date() })
-    .onConflictDoUpdate({
-      target: siteSettings.id,
-      set: { heroMediaType, heroDesktopUrl, heroMobileUrl, updatedAt: new Date() },
-    });
+    .values({ id: "default", ...values })
+    .onConflictDoUpdate({ target: siteSettings.id, set: values });
 
   revalidatePath("/");
-  revalidatePath("/admin/settings");
-  redirect("/admin/settings");
-}
-
-export async function updateTrustTag(formData: FormData) {
-  await requireAdmin();
-
-  const trustTagText = str(formData, "trustTagText") || null;
-
-  await db
-    .insert(siteSettings)
-    .values({ id: "default", trustTagText, updatedAt: new Date() })
-    .onConflictDoUpdate({
-      target: siteSettings.id,
-      set: { trustTagText, updatedAt: new Date() },
-    });
-
-  revalidatePath("/");
-  revalidatePath("/admin/settings");
-  redirect("/admin/settings");
+  revalidatePath("/admin/hero");
+  redirect("/admin/hero");
 }

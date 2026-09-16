@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
-import { Fraunces, Instrument_Sans, Modak } from "next/font/google";
+import { Instrument_Sans, Modak } from "next/font/google";
 import { HeroTransitionProvider } from "@/components/hero-transition";
 import "./globals.css";
-
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-});
 
 const instrument = Instrument_Sans({
   variable: "--font-instrument",
@@ -33,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${instrument.variable} ${modak.variable} h-full antialiased`}
+      className={`${instrument.variable} ${modak.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <HeroTransitionProvider>{children}</HeroTransitionProvider>

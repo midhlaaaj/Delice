@@ -1,46 +1,39 @@
-import Link from "next/link";
 import { db } from "@/db";
 import { stores } from "@/db/schema";
 import { asc } from "drizzle-orm";
 import { deleteStore } from "@/lib/actions/stores";
+import { AdminPageHeader, AdminList, AdminListRow, StatusPill } from "@/components/admin/admin-ui";
 
 export default async function AdminStoresPage() {
   const allStores = await db.select().from(stores).orderBy(asc(stores.name));
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="font-serif text-2xl text-plum">Stores</h1>
-        <Link href="/admin/stores/new" className="bg-plum text-cream rounded-full px-5 py-2.5 text-sm">
-          New store
-        </Link>
-      </div>
+      <AdminPageHeader
+        title="Stores"
+        description="Locations shown on the store locator."
+        action={{ label: "New store", href: "/admin/stores/new" }}
+      />
 
-      <div className="bg-paper border border-line rounded-2xl divide-y divide-line">
-        {allStores.map((s) => (
-          <div key={s.id} className="flex items-center justify-between px-5 py-4">
-            <div>
-              <div className="text-sm font-medium text-plum">{s.name}</div>
-              <div className="text-xs text-ink/50 mt-0.5">
-                {s.addressLine}, {s.city} · {s.isApproved ? "approved" : "pending"}
-                {s.isOwnOutlet ? " · own outlet" : ""}
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link href={`/admin/stores/${s.id}`} className="text-sm text-plum-soft">
-                Edit
-              </Link>
-              <form action={deleteStore}>
-                <input type="hidden" name="id" value={s.id} />
-                <button className="text-sm text-rose">Delete</button>
-              </form>
-            </div>
-          </div>
+      <AdminList
+        emptyLabel="No stores yet."
+        items={allStores.map((s) => (
+          <AdminListRow
+            key={s.id}
+            href={`/admin/stores/${s.id}`}
+            title={s.name}
+            meta={`${s.addressLine}, ${s.city}`}
+            pills={
+              <>
+                <StatusPill tone={s.isApproved ? "positive" : "neutral"} label={s.isApproved ? "Approved" : "Pending"} />
+                <StatusPill tone={s.isOwnOutlet ? "warning" : "neutral"} label={s.isOwnOutlet ? "Own outlet" : "Partner"} />
+              </>
+            }
+            deleteAction={deleteStore}
+            deleteId={s.id}
+          />
         ))}
-        {allStores.length === 0 && (
-          <div className="px-5 py-8 text-center text-sm text-ink/50">No stores yet.</div>
-        )}
-      </div>
+      />
     </div>
   );
 }

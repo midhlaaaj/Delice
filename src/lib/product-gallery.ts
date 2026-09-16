@@ -9,7 +9,7 @@ import type { GalleryItem } from "@/components/product-gallery";
 export function buildGalleryItems(product: Product): GalleryItem[] {
   const colors = { colorFrom: product.colorFrom, colorTo: product.colorTo };
 
-  return [
+  const candidates: GalleryItem[] = [
     {
       id: "three_quarter",
       type: "image",
@@ -35,22 +35,6 @@ export function buildGalleryItems(product: Product): GalleryItem[] {
       ...colors,
     },
     {
-      id: "detail",
-      type: "image",
-      kind: "detail",
-      label: "Close-up detail",
-      url: null,
-      ...colors,
-    },
-    {
-      id: "in_the_box",
-      type: "image",
-      kind: "detail",
-      label: "In the box",
-      url: null,
-      ...colors,
-    },
-    {
       id: "transition_video",
       type: "video",
       kind: "video",
@@ -58,13 +42,13 @@ export function buildGalleryItems(product: Product): GalleryItem[] {
       url: product.transitionVideoUrl,
       ...colors,
     },
-    {
-      id: "bts_video",
-      type: "video",
-      kind: "video",
-      label: "Behind the scenes",
-      url: null,
-      ...colors,
-    },
   ];
+
+  // Only show slots with a real uploaded asset — an empty gradient square
+  // with no photo behind it reads as a broken thumbnail, not a placeholder.
+  const withAssets = candidates.filter((item) => !!item.url);
+
+  // Still show one item (the hero photo slot) so the gallery isn't empty
+  // before any assets exist, falling back to its gradient placeholder.
+  return withAssets.length > 0 ? withAssets : [candidates[0]];
 }

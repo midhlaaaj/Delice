@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import type { UgcVideo } from "@/db/schema";
+import { EmptyState } from "./empty-state";
 
 const FALLBACK_GRADIENTS = [
   "linear-gradient(160deg,#7C4667,#2A1620)",
@@ -91,11 +92,22 @@ export function ReelsFeed({ videos }: { videos: UgcVideo[] }) {
         <div className="w-9" />
       </div>
 
-      <div className="h-[100svh] overflow-y-scroll snap-y snap-mandatory [scrollbar-width:none]">
-        {videos.map((v, i) => (
-          <ReelCard key={v.id} video={v} index={i} />
-        ))}
-      </div>
+      {videos.length > 0 ? (
+        <div className="h-[100svh] overflow-y-scroll snap-y snap-mandatory [scrollbar-width:none]">
+          {videos.map((v, i) => (
+            <ReelCard key={v.id} video={v} index={i} />
+          ))}
+        </div>
+      ) : (
+        <div className="h-[100svh] flex items-center justify-center">
+          <EmptyState
+            tone="dark"
+            title="No videos yet"
+            description="We're still filming — check back soon for behind-the-scenes clips and flavor drops."
+            cta={{ label: "Back to home", href: "/" }}
+          />
+        </div>
+      )}
     </>
   );
 }

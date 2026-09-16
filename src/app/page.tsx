@@ -6,6 +6,7 @@ import { OrbitDial } from "@/components/orbit-dial";
 import { ProductCounterGrid } from "@/components/product-counter-grid";
 import { StoreLocatorPanel } from "@/components/store-locator-panel";
 import { StoreStructuredData } from "@/components/store-schema";
+import { Button } from "@/components/button";
 import {
   getWheelProducts,
   getLatestProducts,
@@ -36,12 +37,12 @@ export default async function HomePage() {
       <StoreStructuredData stores={stores} />
       <SiteHeader />
 
-      <main className="w-full pt-20 bg-ac-background">
+      <main className="w-full pt-[116px] bg-ac-background">
         <HeroSection settings={heroSettings} />
 
         {/* Orbit Dial */}
         <section
-          className="w-full py-14 lg:py-22 bg-gradient-to-b from-ac-surface-container-high/60 via-ac-paper to-ac-surface-container-low border-y border-ac-border-hairline relative overflow-hidden flex items-center"
+          className="w-full py-10 sm:py-10 lg:py-22 bg-gradient-to-b from-ac-surface-container-high/60 via-ac-paper to-ac-surface-container-low border-y border-ac-border-hairline relative overflow-hidden flex items-center"
           id="orbit-dial-section"
         >
           <div className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/3 w-[640px] h-[640px] rounded-full bg-ac-secondary/10 blur-3xl" />
@@ -54,12 +55,12 @@ export default async function HomePage() {
         {/* Our Story */}
         <section className="w-full py-14 lg:py-22 bg-ac-paper" id="our-story">
           <div className="max-w-[1160px] mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-5 relative">
-                <div className="relative w-full aspect-[4/3] sm:aspect-square rounded-2xl overflow-hidden shadow-md bg-gradient-to-br from-ac-blush/40 via-ac-surface-container to-ac-tertiary-container/20" />
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center">
+              <div className="md:col-span-5 relative">
+                <div className="relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden shadow-md bg-gradient-to-br from-ac-blush/40 via-ac-surface-container to-ac-tertiary-container/20" />
               </div>
 
-              <div className="lg:col-span-7 flex flex-col space-y-6 lg:pl-6">
+              <div className="md:col-span-7 flex flex-col space-y-6 md:pl-6">
                 <span className="font-humanist text-sm text-ac-secondary font-medium">
                   Our story
                 </span>
@@ -208,12 +209,12 @@ export default async function HomePage() {
                     Join our wholesale route with 3x weekly chilled deliveries across Kerala.
                   </p>
                 </div>
-                <a
+                <Button
                   href="mailto:partner@delicedesserts.com?subject=Wholesale%20Partner%20Inquiry"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 hover:bg-white/15 border border-ac-on-maroon-line px-6 py-3 font-humanist text-sm text-ac-on-maroon transition-all whitespace-nowrap"
+                  variant="outline-inverse"
                 >
                   Partner Inquiries
-                </a>
+                </Button>
               </div>
             </div>
           </div>

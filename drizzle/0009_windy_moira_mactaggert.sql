@@ -1,0 +1,1 @@
+ALTER TABLE "site_settings" ADD COLUMN "hero_bg_lines" text[] DEFAULT '{"Slice of Happiness","Slice of Happiness","Slice of Happiness"}' NOT NULL;
