@@ -64,7 +64,7 @@ export default async function HomePage() {
                 <span className="font-humanist text-sm text-ac-secondary font-medium">
                   Our story
                 </span>
-                <h2 className="font-editorial text-[32px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
+                <h2 className="font-editorial text-[28px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
                   Started in a home kitchen, now boxed for all of Kerala
                 </h2>
                 <p className="font-humanist text-base leading-relaxed text-ac-on-surface-variant">
@@ -74,13 +74,13 @@ export default async function HomePage() {
                 </p>
                 <div className="flex gap-10 pt-2">
                   <div>
-                    <span className="block font-editorial text-2xl text-ac-primary font-bold">6+</span>
+                    <span className="block font-editorial text-2xl text-ac-primary font-semibold">6+</span>
                     <span className="font-humanist text-sm text-ac-on-surface-variant">
                       Flavors
                     </span>
                   </div>
                   <div>
-                    <span className="block font-editorial text-2xl text-ac-primary font-bold">
+                    <span className="block font-editorial text-2xl text-ac-primary font-semibold">
                       {stores.length}+
                     </span>
                     <span className="font-humanist text-sm text-ac-on-surface-variant">
@@ -88,7 +88,7 @@ export default async function HomePage() {
                     </span>
                   </div>
                   <div>
-                    <span className="block font-editorial text-2xl text-ac-primary font-bold">2021</span>
+                    <span className="block font-editorial text-2xl text-ac-primary font-semibold">2021</span>
                     <span className="font-humanist text-sm text-ac-on-surface-variant">
                       Since
                     </span>
@@ -104,7 +104,7 @@ export default async function HomePage() {
           <div className="max-w-[1160px] mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-11 gap-4">
               <div className="max-w-xl">
-                <h2 className="font-editorial text-[32px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
+                <h2 className="font-editorial text-[28px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
                   More from the counter
                 </h2>
                 <p className="font-humanist text-base text-ac-on-surface-variant mt-3">
@@ -135,7 +135,7 @@ export default async function HomePage() {
                       Social Unboxing
                     </span>
                   </div>
-                  <h2 className="font-editorial text-[32px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
+                  <h2 className="font-editorial text-[28px] sm:text-[38px] leading-tight tracking-tight text-ac-primary">
                     Loved by Kerala Foodies
                   </h2>
                   <p className="font-humanist text-base text-ac-on-surface-variant mt-1">
@@ -183,17 +183,17 @@ export default async function HomePage() {
         <section className="w-full py-14 lg:py-22 bg-ac-maroon text-ac-on-maroon relative" id="store-locator">
           <div className="max-w-[1160px] mx-auto px-6">
             <div className="max-w-3xl mx-auto flex flex-col space-y-8">
-              <div className="space-y-3 text-center">
-                <div className="inline-flex items-center justify-center gap-2">
+              <div className="space-y-3 text-left sm:text-center">
+                <div className="inline-flex items-center justify-start sm:justify-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-ac-secondary-container" />
                   <span className="font-humanist text-xs text-ac-secondary-container uppercase tracking-widest font-semibold">
                     Chilled Counters
                   </span>
                 </div>
-                <h2 className="font-editorial text-[32px] sm:text-[42px] leading-tight tracking-tight text-ac-on-maroon">
+                <h2 className="font-editorial text-[28px] sm:text-[42px] leading-tight tracking-tight text-ac-on-maroon">
                   Find Delice Near You
                 </h2>
-                <p className="font-humanist text-base text-ac-on-maroon-muted max-w-xl mx-auto">
+                <p className="font-humanist text-base text-ac-on-maroon-muted max-w-xl mx-0 sm:mx-auto">
                   Every store below carries the full lineup. Search your area or use your location.
                 </p>
               </div>

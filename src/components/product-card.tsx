@@ -34,7 +34,7 @@ export function ProductCard({ product }: { product: Product }) {
           <h3 className="font-editorial text-[15px] text-ac-primary leading-tight truncate">{product.name}</h3>
           <p className="font-humanist text-[11px] text-ac-on-surface-variant mt-0.5">{serves}</p>
         </div>
-        <span className="font-editorial text-[13px] font-bold text-ac-primary bg-ac-secondary-container/25 rounded-full px-2.5 py-1 shrink-0">
+        <span className="font-editorial text-[13px] font-semibold text-ac-primary bg-ac-secondary-container/25 rounded-full px-2.5 py-1 shrink-0">
           {product.priceLabel}
         </span>
       </div>

@@ -29,7 +29,7 @@ export function ProductPreviewCard({
       {/* Mirrors src/components/product-card.tsx exactly (aside from the fixed
           bg-ac-blush tint here, since the real per-product hash needs an id
           this product doesn't have until it's saved) — keep both in sync. */}
-      <div className="w-full flex flex-col rounded-[22px] overflow-hidden bg-ac-surface-container-lowest shadow-[0_1px_3px_rgba(42,22,32,0.06)]">
+      <div className="w-full flex flex-col rounded-[22px] overflow-hidden bg-ac-surface-container-lowest shadow-ac-card">
         <div className="relative aspect-[4/3] flex items-center justify-center overflow-hidden bg-ac-blush/25">
           <Visual colorFrom={colorFrom} colorTo={colorTo} imageUrl={imageUrl} alt={name} />
         </div>
@@ -38,7 +38,7 @@ export function ProductPreviewCard({
             <h3 className="font-editorial text-[15px] text-ac-primary leading-tight truncate">{name || "Product name"}</h3>
             <p className="font-humanist text-[11px] text-ac-on-surface-variant mt-0.5">{serves}</p>
           </div>
-          <span className="font-editorial text-[13px] font-bold text-ac-primary bg-ac-secondary-container/25 rounded-full px-2.5 py-1 shrink-0">
+          <span className="font-editorial text-[13px] font-semibold text-ac-primary bg-ac-secondary-container/25 rounded-full px-2.5 py-1 shrink-0">
             {priceLabel || "₹—"}
           </span>
         </div>

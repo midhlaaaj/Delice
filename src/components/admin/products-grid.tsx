@@ -98,11 +98,11 @@ export function ProductsGrid({ products }: { products: Product[] }) {
               dragIndex.current = null;
               setOverIndex(null);
             }}
-            className={`group flex flex-col bg-ac-surface-container-lowest border rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(42,22,32,0.05)] transition-shadow ${
+            className={`group flex flex-col bg-ac-surface-container-lowest border rounded-2xl overflow-hidden shadow-ac-card transition-shadow ${
               overIndex === i ? "border-ac-secondary" : "border-ac-border-hairline"
             } ${editing ? "cursor-grab active:cursor-grabbing" : "hover:shadow-[0_12px_24px_-14px_rgba(42,22,32,0.25)]"}`}
           >
-            <div className="relative aspect-square bg-ac-surface-container-low flex items-center justify-center">
+            <div className="relative aspect-[4/3] bg-ac-surface-container-low flex items-center justify-center">
               {editing && (
                 <span className="absolute top-2 left-2 z-10 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-ac-on-surface-variant shadow-sm" aria-hidden>
                   <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">

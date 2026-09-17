@@ -70,7 +70,7 @@ export default async function AdminDashboard() {
           <Link
             key={c.label}
             href={c.href}
-            className="group bg-ac-surface-container-lowest border border-ac-border-hairline rounded-2xl p-5 flex flex-col gap-4 shadow-[0_1px_3px_rgba(42,22,32,0.05)] hover:-translate-y-0.5 hover:shadow-[0_12px_24px_-14px_rgba(42,22,32,0.25)] transition-all"
+            className="group bg-ac-surface-container-lowest border border-ac-border-hairline rounded-2xl p-5 flex flex-col gap-4 shadow-ac-card hover:-translate-y-0.5 hover:shadow-ac-pop transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-ac-maroon/8 text-ac-maroon flex items-center justify-center">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" className="w-5 h-5">
@@ -112,7 +112,7 @@ export default async function AdminDashboard() {
                 </div>
                 <span
                   className={`font-humanist text-[11px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full shrink-0 ${
-                    p.isPublished ? "bg-ac-sage/20 text-[#4a5a37]" : "bg-ac-surface-container text-ac-on-surface-variant"
+                    p.isPublished ? "bg-ac-sage/20 text-ac-on-sage" : "bg-ac-surface-container text-ac-on-surface-variant"
                   }`}
                 >
                   {p.isPublished ? "Published" : "Hidden"}

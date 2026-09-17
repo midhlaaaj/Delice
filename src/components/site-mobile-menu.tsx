@@ -60,7 +60,7 @@ export function SiteMobileMenu() {
 
         <div className="relative flex flex-col flex-1 pl-8 pr-6 pt-4 overflow-y-auto">
           <nav className="flex flex-col">
-            {NAV_LINKS.map((item, i) => {
+            {NAV_LINKS.map((item) => {
               const active = isActive(pathname, item.href);
               return (
                 <Link
@@ -70,13 +70,6 @@ export function SiteMobileMenu() {
                   aria-current={active ? "page" : undefined}
                   className="group flex items-center gap-3 py-4 border-b border-ac-border-hairline"
                 >
-                  <span
-                    className={`font-humanist text-[11px] font-semibold tabular-nums ${
-                      active ? "text-ac-maroon" : "text-ac-secondary/70"
-                    }`}
-                  >
-                    0{i + 1}
-                  </span>
                   <span
                     className={`font-editorial text-2xl transition-all group-hover:text-ac-maroon group-hover:translate-x-1 ${
                       active ? "text-ac-maroon" : "text-ac-on-surface"

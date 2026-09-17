@@ -85,26 +85,33 @@ export function AdminSidebar({ email }: { email?: string | null }) {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex md:flex-col md:w-60 md:shrink-0 md:sticky md:top-0 md:h-screen bg-ac-surface-container-lowest border-r border-ac-border-hairline">
-      <Link href="/admin" className="flex items-center gap-2 px-6 h-20 shrink-0 border-b border-ac-border-hairline">
-        <span className="font-editorial text-lg text-ac-primary">Delice</span>
-        <span className="font-humanist text-[11px] font-semibold uppercase tracking-wide text-ac-secondary bg-ac-secondary-container/20 px-2 py-0.5 rounded-full">
+    <aside className="hidden md:flex md:flex-col md:w-64 md:shrink-0 md:sticky md:top-0 md:h-screen relative bg-ac-surface overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 -left-20 w-64 h-64 rounded-full bg-ac-maroon/10 blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-0 right-0 w-1.5 h-full bg-gradient-to-b from-ac-maroon via-ac-rose to-ac-maroon/40"
+      />
+
+      <Link href="/admin" className="relative flex items-center gap-2 pl-8 pr-6 h-20 shrink-0">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/delice-wordmark-dark.svg" alt="Delice" className="h-8 w-auto" />
+        <span className="font-humanist text-[11px] font-semibold uppercase tracking-[0.2em] text-ac-secondary bg-ac-secondary-container/20 px-2 py-0.5 rounded-full">
           Admin
         </span>
       </Link>
 
-      <nav className="flex-1 px-3 py-5 flex flex-col gap-1 overflow-y-auto">
+      <nav className="relative flex-1 pl-8 pr-6 pt-2 flex flex-col overflow-y-auto">
         {NAV.map((item) => {
           const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-humanist text-sm transition-colors ${
-                active
-                  ? "bg-ac-maroon text-ac-on-maroon font-medium"
-                  : "text-ac-on-surface-variant hover:bg-ac-surface-container-low hover:text-ac-on-surface"
-              }`}
+              aria-current={active ? "page" : undefined}
+              className="group flex items-center gap-3 py-3.5 border-b border-ac-border-hairline"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -112,20 +119,31 @@ export function AdminSidebar({ email }: { email?: string | null }) {
                 stroke="currentColor"
                 strokeWidth="1.7"
                 strokeLinecap="round"
-                className="w-4.5 h-4.5 shrink-0"
+                className={`w-4 h-4 shrink-0 transition-colors ${
+                  active ? "text-ac-maroon" : "text-ac-on-surface-variant group-hover:text-ac-maroon"
+                }`}
               >
                 {item.icon}
               </svg>
-              {item.label}
+              <span
+                className={`font-editorial text-lg transition-all group-hover:text-ac-maroon group-hover:translate-x-1 ${
+                  active ? "text-ac-maroon" : "text-ac-on-surface"
+                }`}
+              >
+                {item.label}
+              </span>
+              <span className="ml-auto text-ac-secondary/50 group-hover:text-ac-maroon group-hover:translate-x-1 transition-all text-sm">
+                {active ? "●" : "→"}
+              </span>
             </Link>
           );
         })}
       </nav>
 
-      <div className="px-4 py-4 border-t border-ac-border-hairline">
-        <div className="font-humanist text-[12px] text-ac-on-surface-variant truncate mb-2 px-1">{email}</div>
+      <div className="relative pl-8 pr-6 py-6">
+        <div className="font-humanist text-[12px] text-ac-on-surface-variant truncate mb-3">{email}</div>
         <form action={adminSignOut}>
-          <button className="w-full font-humanist text-sm text-ac-on-surface-variant border border-ac-border-hairline rounded-xl px-3.5 py-2.5 hover:bg-ac-surface-container-low hover:text-ac-on-surface transition-colors">
+          <button className="w-full font-humanist text-[11px] font-semibold uppercase tracking-[0.15em] text-ac-secondary/70 border border-ac-border-hairline rounded-full px-3.5 py-2.5 hover:border-ac-maroon hover:text-ac-maroon transition-colors">
             Sign out
           </button>
         </form>

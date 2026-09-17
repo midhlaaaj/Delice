@@ -16,13 +16,13 @@ export function VideoPreviewCard({
       <p className="font-humanist text-[11px] font-semibold uppercase tracking-wide text-ac-on-surface-variant mb-2.5">
         Live preview (mobile)
       </p>
-      <div className="w-[220px] aspect-[9/17.5] rounded-[28px] border-[6px] border-ac-ink bg-ac-ink overflow-hidden relative shadow-[0_20px_50px_-30px_rgba(42,22,32,0.5)]">
+      <div className="w-[220px] aspect-[9/17.5] rounded-[28px] border-[6px] border-ac-ink bg-ac-ink overflow-hidden relative shadow-ac-modal">
         <div
           className="absolute inset-0 flex items-end after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/15 after:via-transparent after:via-30% after:to-black/75"
           style={
             thumbnailUrl
               ? { backgroundImage: `url(${thumbnailUrl})`, backgroundSize: "cover", backgroundPosition: "center" }
-              : { background: "linear-gradient(160deg,#7C4667,#2A1620)" }
+              : { background: "linear-gradient(160deg, var(--ac-primary-container), var(--ac-ink))" }
           }
         >
           <div className="absolute top-4 left-3 z-10 inline-flex items-center gap-1.5 bg-black/35 px-2.5 py-1 rounded-full text-[10px] text-white before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-orange">
@@ -31,7 +31,7 @@ export function VideoPreviewCard({
 
           <div className="relative z-10 pr-9 pl-3 pb-6 text-white">
             <div className="text-[11.5px] font-semibold mb-1 flex items-center gap-1.5">
-              <span className="w-4.5 h-4.5 rounded-full border border-white bg-[linear-gradient(160deg,#E3A9B6,#7C4667)] shrink-0" />
+              <span className="w-4.5 h-4.5 rounded-full border border-white bg-[linear-gradient(160deg,var(--ac-blush),var(--ac-primary-container))] shrink-0" />
               <span className="truncate">{handle || "@handle"}</span>
             </div>
             <div className="text-[11px] leading-snug text-white/92 max-w-[85%] line-clamp-2">

@@ -359,7 +359,7 @@ export function OrbitDial({ products }: { products: Product[] }) {
           <p className="font-humanist text-[13px] leading-snug text-ac-on-surface-variant line-clamp-2">
             {active.description}
           </p>
-          <span className="font-editorial text-xl text-ac-primary font-bold whitespace-nowrap">
+          <span className="font-editorial text-xl text-ac-primary font-semibold whitespace-nowrap">
             {active.priceLabel}
           </span>
         </div>

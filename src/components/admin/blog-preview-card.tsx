@@ -22,7 +22,7 @@ export function BlogPreviewCard({
       <p className="font-humanist text-[11px] font-semibold uppercase tracking-wide text-ac-on-surface-variant mb-2.5">
         Live preview (mobile)
       </p>
-      <div className="w-[240px] bg-ac-paper border border-ac-border-hairline rounded-2xl overflow-hidden shadow-[0_20px_50px_-30px_rgba(42,22,32,0.35)]">
+      <div className="w-[240px] bg-ac-paper border border-ac-border-hairline rounded-2xl overflow-hidden shadow-ac-modal">
         <div className="relative aspect-[16/9]">
           {coverImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element

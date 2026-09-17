@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { UgcVideo } from "@/db/schema";
 import { EmptyState } from "./empty-state";
@@ -16,17 +16,55 @@ const FALLBACK_GRADIENTS = [
 
 function ReelCard({ video, index }: { video: UgcVideo; index: number }) {
   const [paused, setPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasVideo = Boolean(video.videoUrl);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    const container = containerRef.current;
+    if (!el || !container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !paused) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [paused]);
 
   return (
     <div className="h-[100svh] snap-start relative flex items-center justify-center md:py-6">
       <div
+        ref={containerRef}
         className="relative w-full h-full md:w-[420px] md:h-full md:rounded-[28px] flex items-end overflow-hidden after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-b after:from-black/15 after:via-transparent after:via-30% after:to-black/75"
         style={
-          video.thumbnailUrl
-            ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: "cover", backgroundPosition: "center" }
-            : { background: FALLBACK_GRADIENTS[index % FALLBACK_GRADIENTS.length] }
+          hasVideo
+            ? undefined
+            : video.thumbnailUrl
+              ? { backgroundImage: `url(${video.thumbnailUrl})`, backgroundSize: "cover", backgroundPosition: "center" }
+              : { background: FALLBACK_GRADIENTS[index % FALLBACK_GRADIENTS.length] }
         }
       >
+        {hasVideo && (
+          <video
+            ref={videoRef}
+            src={video.videoUrl}
+            poster={video.thumbnailUrl ?? undefined}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )}
+
         <div className="absolute top-[70px] left-4.5 z-10 inline-flex items-center gap-1.5 bg-black/35 px-3 py-1.5 rounded-full text-xs text-white before:content-[''] before:w-1.5 before:h-1.5 before:rounded-full before:bg-orange">
           Delice
         </div>

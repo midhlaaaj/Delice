@@ -26,7 +26,7 @@ function GalleryFrame({
       return (
         <video
           src={item.url}
-          className={`w-full h-full object-cover ${className}`}
+          className={`w-full h-full object-contain ${className}`}
           controls
           playsInline
         />
@@ -34,7 +34,7 @@ function GalleryFrame({
     }
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={item.url} alt={item.label} className={`w-full h-full object-cover ${className}`} />
+      <img src={item.url} alt={item.label} className={`w-full h-full object-contain ${className}`} />
     );
   }
 
@@ -91,7 +91,7 @@ export function ProductGallery({ items }: { items: GalleryItem[] }) {
             <button
               key={item.id}
               onClick={() => setActiveIndex(i)}
-              className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-colors ${
+              className={`relative aspect-square rounded-xl overflow-hidden border-2 bg-ac-surface-container-low transition-colors ${
                 i === activeIndex ? "border-ac-primary" : "border-transparent"
               }`}
             >
@@ -112,7 +112,7 @@ export function ProductGallery({ items }: { items: GalleryItem[] }) {
       <div className="md:hidden">
         <div className="flex overflow-x-auto snap-x snap-mandatory rounded-2xl [scrollbar-width:none] min-w-0">
           {items.map((item) => (
-            <div key={item.id} className="flex-none w-full basis-full min-w-0 aspect-[4/5] snap-start">
+            <div key={item.id} className="flex-none w-full basis-full min-w-0 aspect-[4/5] bg-ac-surface-container-low snap-start">
               <GalleryFrame item={item} />
             </div>
           ))}

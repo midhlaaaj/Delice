@@ -36,7 +36,7 @@ export function AdminPageHeader({
 export function AdminCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`bg-ac-surface-container-lowest border border-ac-border-hairline rounded-2xl shadow-[0_1px_3px_rgba(42,22,32,0.05)] ${className}`}
+      className={`bg-ac-surface-container-lowest border border-ac-border-hairline rounded-2xl shadow-ac-card ${className}`}
     >
       {children}
     </div>
@@ -45,7 +45,7 @@ export function AdminCard({ children, className = "" }: { children: React.ReactN
 
 export function StatusPill({ tone, label }: { tone: "positive" | "neutral" | "warning"; label: string }) {
   const styles = {
-    positive: "bg-ac-sage/20 text-[#4a5a37]",
+    positive: "bg-ac-sage/20 text-ac-on-sage",
     neutral: "bg-ac-surface-container text-ac-on-surface-variant",
     warning: "bg-ac-secondary-container/25 text-ac-secondary",
   } as const;

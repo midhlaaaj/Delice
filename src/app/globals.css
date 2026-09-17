@@ -53,6 +53,7 @@
   --ac-ink-muted: rgba(42, 22, 32, 0.45);
   --ac-cocoa: #5A3222;
   --ac-sage: #8B9B72;
+  --ac-on-sage: #4a5a37;
   --ac-blush: #E3A9B6;
   --ac-rose: #C15D5E;
   --ac-border-hairline: rgba(42, 22, 32, 0.12);
@@ -118,6 +119,7 @@
   --color-ac-ink-muted: var(--ac-ink-muted);
   --color-ac-cocoa: var(--ac-cocoa);
   --color-ac-sage: var(--ac-sage);
+  --color-ac-on-sage: var(--ac-on-sage);
   --color-ac-blush: var(--ac-blush);
   --color-ac-rose: var(--ac-rose);
   --color-ac-border-hairline: var(--ac-border-hairline);
@@ -133,6 +135,22 @@
   --font-editorial: var(--font-instrument);
   --font-humanist: var(--font-instrument);
   --font-display: var(--font-modak);
+}
+
+@utility shadow-ac-card {
+  box-shadow: 0 1px 3px rgba(42, 22, 32, 0.06);
+}
+
+@utility shadow-ac-card-hover {
+  box-shadow: 0 18px 30px -16px rgba(42, 22, 32, 0.28);
+}
+
+@utility shadow-ac-pop {
+  box-shadow: 0 12px 24px -14px rgba(42, 22, 32, 0.25);
+}
+
+@utility shadow-ac-modal {
+  box-shadow: 0 20px 50px -30px rgba(42, 22, 32, 0.4);
 }
 
 html {

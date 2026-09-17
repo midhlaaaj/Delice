@@ -33,6 +33,8 @@ export function MediaUploadField({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cropQueue, setCropQueue] = useState<File[]>([]);
+  const [editing, setEditing] = useState<{ index: number; file: File } | null>(null);
+  const [editLoadingIndex, setEditLoadingIndex] = useState<number | null>(null);
   const dragIndex = useRef<number | null>(null);
   const [overIndex, setOverIndex] = useState<number | null>(null);
 
@@ -81,6 +83,40 @@ export function MediaUploadField({
 
   function removeAt(index: number) {
     setItems((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  async function startEdit(index: number) {
+    setError(null);
+    setEditLoadingIndex(index);
+    try {
+      const res = await fetch(items[index].url);
+      if (!res.ok) throw new Error("Couldn't load image for editing");
+      const blob = await res.blob();
+      const file = new File([blob], "image.png", { type: blob.type || "image/png" });
+      setEditing({ index, file });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Couldn't load image for editing");
+    } finally {
+      setEditLoadingIndex(null);
+    }
+  }
+
+  async function replaceAt(index: number, file: File) {
+    setError(null);
+    setUploading(true);
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      body.append("folder", folder);
+      const res = await fetch("/api/admin/upload", { method: "POST", body });
+      if (!res.ok) throw new Error("Upload failed");
+      const { publicUrl } = await res.json();
+      setItems((prev) => prev.map((it, i) => (i === index ? { url: publicUrl, type: "image" } : it)));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
+    }
   }
 
   function reorder(from: number, to: number) {
@@ -161,6 +197,24 @@ export function MediaUploadField({
                 {i === 0 && item.type === "image" ? "Hero shot" : item.type === "video" ? "Video" : "Photo"}
               </span>
 
+              {item.type === "image" && (
+                <button
+                  type="button"
+                  onClick={() => startEdit(i)}
+                  disabled={editLoadingIndex !== null}
+                  aria-label="Edit / crop"
+                  className="text-ac-on-surface-variant hover:text-ac-secondary transition-colors shrink-0 disabled:opacity-50"
+                >
+                  {editLoadingIndex === i ? (
+                    <span className="block w-4 h-4 rounded-full border-2 border-ac-border-hairline border-t-ac-secondary animate-spin" />
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17.5 3.5a2.1 2.1 0 0 1 3 3L8 19l-4 1 1-4Z" />
+                    </svg>
+                  )}
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={() => removeAt(i)}
@@ -198,13 +252,28 @@ export function MediaUploadField({
       {cropQueue.length > 0 && (
         <ImageCropperModal
           file={cropQueue[0]}
-          aspect={1}
-          outputSize={{ w: 1200, h: 1200 }}
+          aspect={4 / 3}
+          outputSize={{ w: 1600, h: 1200 }}
           title="Crop photo"
           onCancel={() => setCropQueue((q) => q.slice(1))}
           onCropped={(cropped) => {
             setCropQueue((q) => q.slice(1));
             uploadFiles([cropped]);
+          }}
+        />
+      )}
+
+      {editing && (
+        <ImageCropperModal
+          file={editing.file}
+          aspect={4 / 3}
+          outputSize={{ w: 1600, h: 1200 }}
+          title="Edit photo"
+          onCancel={() => setEditing(null)}
+          onCropped={(cropped) => {
+            const index = editing.index;
+            setEditing(null);
+            replaceAt(index, cropped);
           }}
         />
       )}

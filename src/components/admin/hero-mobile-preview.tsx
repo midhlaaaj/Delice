@@ -39,7 +39,7 @@ export function HeroMobilePreview({
       <p className="font-humanist text-[11px] font-semibold uppercase tracking-wide text-ac-on-surface-variant mb-2.5">
         Live preview (mobile)
       </p>
-      <div className="w-[240px] aspect-[9/18.5] rounded-[28px] border-[6px] border-ac-ink bg-ac-ink overflow-hidden relative shadow-[0_20px_50px_-30px_rgba(42,22,32,0.5)]">
+      <div className="w-[240px] aspect-[9/18.5] rounded-[28px] border-[6px] border-ac-ink bg-ac-ink overflow-hidden relative shadow-ac-modal">
         <div className="w-full h-full bg-ac-background overflow-hidden flex flex-col">
           {/* Header — collapsed mobile state: wordmark + hamburger */}
           <div className="h-11 shrink-0 bg-ac-surface flex items-center justify-between px-3 border-b border-ac-border-hairline z-10 relative">

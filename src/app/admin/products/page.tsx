@@ -1,10 +1,9 @@
-import { getAllProducts, getSiteSettings } from "@/db/queries";
-import { AdminPageHeader, AdminCard } from "@/components/admin/admin-ui";
+import { getAllProducts } from "@/db/queries";
+import { AdminPageHeader } from "@/components/admin/admin-ui";
 import { ProductsGrid } from "@/components/admin/products-grid";
-import { DefaultHighlightsForm } from "@/components/admin/default-highlights-form";
 
 export default async function AdminProductsPage() {
-  const [products, settings] = await Promise.all([getAllProducts(), getSiteSettings()]);
+  const products = await getAllProducts();
 
   return (
     <div>
@@ -13,10 +12,6 @@ export default async function AdminProductsPage() {
         description="Everything on the wheel and in the catalogue."
         action={{ label: "New product", href: "/admin/products/new" }}
       />
-
-      <AdminCard className="p-5 mb-8">
-        <DefaultHighlightsForm defaultHighlights={settings.defaultHighlights} />
-      </AdminCard>
 
       <ProductsGrid products={products} />
     </div>

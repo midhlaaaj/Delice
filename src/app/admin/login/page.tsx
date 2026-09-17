@@ -37,9 +37,18 @@ export default async function AdminLoginPage({
     <div className="min-h-screen flex items-center justify-center bg-ac-background px-6">
       <form
         action={loginAction}
-        className="w-full max-w-sm bg-ac-surface-container-lowest rounded-2xl p-8 border border-ac-border-hairline shadow-[0_20px_50px_-30px_rgba(42,22,32,0.35)]"
+        className="relative w-full max-w-sm bg-ac-surface-container-lowest rounded-2xl p-8 border border-ac-border-hairline shadow-ac-modal overflow-hidden"
       >
-        <h1 className="font-editorial text-2xl text-ac-primary mb-1">Delice admin</h1>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-20 -right-16 w-48 h-48 rounded-full bg-ac-maroon/10 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-ac-maroon via-ac-rose to-ac-maroon/40"
+        />
+
+        <h1 className="relative font-editorial text-2xl text-ac-primary mb-1">Delice admin</h1>
         <p className="font-humanist text-sm text-ac-on-surface-variant mb-6">
           Sign in to manage products, stores, and videos.
         </p>

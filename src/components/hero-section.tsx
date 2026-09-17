@@ -6,7 +6,7 @@ function MarqueeRow({ text: bgText, reverse, duration }: { text: string; reverse
     <span className="inline-flex items-center">
       {Array.from({ length: 3 }).map((_, i) => (
         <span key={i} className="inline-flex items-center">
-          <span className="font-display text-[90px] sm:text-[130px] lg:text-[170px] uppercase tracking-tight text-ac-on-maroon leading-none px-4">
+          <span className="font-display text-[90px] @sm:text-[130px] @lg:text-[170px] uppercase tracking-tight text-ac-on-maroon leading-none px-4">
             {bgText}
           </span>
         </span>
@@ -32,7 +32,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
   const overlapVideoUrl = settings.heroMediaType === "video" ? settings.heroDesktopUrl : null;
 
   return (
-    <section className="relative isolate w-full overflow-hidden bg-ac-maroon flex flex-col min-h-[calc(100svh-116px)]">
+    <section className="@container relative isolate w-full overflow-hidden bg-ac-maroon flex flex-col min-h-[calc(100svh-116px)]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 opacity-[0.16] mix-blend-overlay"
@@ -44,14 +44,14 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
       />
 
       <div className="relative flex-1 flex flex-col justify-center py-10">
-        <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8 opacity-90 blur-[3px] sm:blur-[4px]">
+        <div className="flex flex-col gap-4 @sm:gap-6 @lg:gap-8 opacity-90 blur-[3px] @sm:blur-[4px]">
           <MarqueeRow text={settings.heroBgLines[0] ?? "Slice of Happiness"} duration="34s" />
           <MarqueeRow text={settings.heroBgLines[1] ?? "Slice of Happiness"} duration="30s" reverse />
           <MarqueeRow text={settings.heroBgLines[2] ?? "Slice of Happiness"} duration="38s" />
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center px-6 pb-20 sm:pb-28">
-          <div className="relative w-[260px] h-[260px] sm:w-[400px] sm:h-[400px] md:w-[560px] md:h-[560px] lg:w-[680px] lg:h-[680px] flex items-center justify-center overflow-hidden rounded-[32px]">
+        <div className="absolute inset-0 flex items-center justify-center px-6 pb-20 @sm:pb-28">
+          <div className="relative w-[260px] h-[260px] @sm:w-[400px] @sm:h-[400px] @md:w-[560px] @md:h-[560px] @lg:w-[680px] @lg:h-[680px] flex items-center justify-center overflow-hidden rounded-[32px]">
 
             {overlapVideoUrl ? (
               <video
@@ -71,7 +71,7 @@ export function HeroSection({ settings }: { settings: SiteSettings }) {
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-20 sm:bottom-28 flex justify-center px-6 text-center">
+        <div className="absolute inset-x-0 bottom-20 @sm:bottom-28 flex justify-center px-6 text-center">
           <Button href="/explore" variant="inverse">
             Explore Flavors
           </Button>

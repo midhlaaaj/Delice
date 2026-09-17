@@ -66,7 +66,7 @@ export default async function ProductDetailPage({
             <h1 className="font-editorial text-ac-primary text-[clamp(30px,4vw,44px)] leading-[1.05]">
               {product.name}
             </h1>
-            <div className="inline-block mt-4 font-editorial text-[15px] font-bold text-ac-primary border border-ac-border-hairline px-4.5 py-2 rounded-full">
+            <div className="inline-block mt-4 font-editorial text-[15px] font-semibold text-ac-primary border border-ac-border-hairline px-4.5 py-2 rounded-full">
               {product.priceLabel}
             </div>
 
