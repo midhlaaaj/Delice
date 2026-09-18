@@ -355,15 +355,6 @@ export function OrbitDial({ products }: { products: Product[] }) {
 
         <FlavorVisualCarousel key={active.id} product={active} index={activeIndex} />
 
-        <div className="flex items-end justify-between gap-3.5">
-          <p className="font-humanist text-[13px] leading-snug text-ac-on-surface-variant line-clamp-2">
-            {active.description}
-          </p>
-          <span className="font-editorial text-xl text-ac-primary font-semibold whitespace-nowrap">
-            {active.priceLabel}
-          </span>
-        </div>
-
         <Button href={`/product/${active.slug}`} variant="solid" className="w-full">
           View Details
         </Button>

@@ -19,6 +19,10 @@ export function FlavorVisualCarousel({ product, index }: { product: Product; ind
     >
       <ProductVisual product={product} imageUrl={images[imgIndex]} alt={product.name} />
 
+      <span className="absolute top-3 right-3 font-editorial italic text-[13px] text-ac-primary bg-ac-surface-container-lowest/85 backdrop-blur-sm rounded-full px-3 py-1 shadow-ac-pop">
+        {product.priceLabel}
+      </span>
+
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
           {images.map((url, i) => (

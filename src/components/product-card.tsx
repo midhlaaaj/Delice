@@ -18,7 +18,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="group flex flex-col rounded-[22px] overflow-hidden bg-ac-surface-container-lowest shadow-[0_1px_3px_rgba(42,22,32,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_30px_-16px_rgba(42,22,32,0.28)]"
+      className="group flex flex-col rounded-xl overflow-hidden bg-ac-surface-container-lowest shadow-ac-card transition-all duration-300 hover:-translate-y-1 hover:shadow-ac-card-hover"
     >
       <div
         className={`relative aspect-[4/3] flex items-center justify-center overflow-hidden ${pastelForProduct(product.id)}`}
@@ -26,17 +26,20 @@ export function ProductCard({ product }: { product: Product }) {
         <ProductVisual
           product={product}
           imageUrl={product.imageThreeQuarterUrl}
-          className="transition-transform duration-300 group-hover:scale-105"
+          className="transition-transform duration-500 ease-out group-hover:scale-105"
         />
-      </div>
-      <div className="flex items-center justify-between gap-2 py-2.5 px-3">
-        <div className="min-w-0">
-          <h3 className="font-editorial text-[15px] text-ac-primary leading-tight truncate">{product.name}</h3>
-          <p className="font-humanist text-[11px] text-ac-on-surface-variant mt-0.5">{serves}</p>
-        </div>
-        <span className="font-editorial text-[13px] font-semibold text-ac-primary bg-ac-secondary-container/25 rounded-full px-2.5 py-1 shrink-0">
+        <span className="absolute top-3 right-3 font-editorial italic text-[13px] text-ac-primary bg-ac-surface-container-lowest/85 backdrop-blur-sm rounded-full px-3 py-1 shadow-ac-pop">
           {product.priceLabel}
         </span>
+      </div>
+      <div className="flex flex-col gap-1 py-3 px-3.5">
+        <h3 className="font-editorial text-[16px] text-ac-primary leading-tight truncate transition-transform duration-300 group-hover:translate-x-0.5">
+          {product.name}
+        </h3>
+        <p className="font-humanist text-[10.5px] uppercase tracking-[0.14em] text-ac-secondary/80 flex items-center gap-1.5">
+          <span className="text-ac-secondary/50">✦</span>
+          {serves}
+        </p>
       </div>
     </Link>
   );
