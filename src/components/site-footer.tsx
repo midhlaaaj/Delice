@@ -8,6 +8,12 @@ const FOOTER_LINKS = [
   { href: "/#partner-wholesale", label: "Become a Partner" },
 ];
 
+const LEGAL_LINKS = [
+  { href: "/privacy-policy", label: "Privacy Policy" },
+  { href: "/terms-and-conditions", label: "Terms & Conditions" },
+  { href: "/cookie-policy", label: "Cookie Policy" },
+];
+
 export function SiteFooter() {
   return (
     <footer className="w-full bg-ac-maroon text-ac-on-maroon overflow-hidden">
@@ -40,8 +46,19 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-ac-on-maroon-line">
-        <div className="max-w-[1160px] mx-auto px-6 py-4">
+        <div className="max-w-[1160px] mx-auto px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <p className="font-humanist text-xs text-ac-on-maroon-muted">© 2026 Delice</p>
+          <nav className="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+            {LEGAL_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="font-humanist text-xs text-ac-on-maroon-muted hover:text-ac-on-maroon transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>

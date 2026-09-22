@@ -1,14 +1,28 @@
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { signIn, auth } from "@/auth";
 import { AuthError } from "next-auth";
 import { PasswordField } from "@/components/admin/password-field";
 import { adminInput, adminLabel } from "@/components/admin/admin-ui";
 import { Button } from "@/components/button";
+import { checkRateLimit, getIpFromHeaders } from "@/lib/rate-limit";
 
 export const metadata = { title: "Admin login — Delice" };
 
 async function loginAction(formData: FormData) {
   "use server";
+
+  const ip = getIpFromHeaders(await headers());
+  const email = String(formData.get("email") ?? "").toLowerCase().trim();
+
+  // Two tiers: a tight per-IP+email lock (stops targeted guessing) and a
+  // looser per-IP cap (stops one attacker cycling through many emails).
+  const perAccount = checkRateLimit(`login:${ip}:${email}`, 6, 10 * 60_000);
+  const perIp = checkRateLimit(`login-ip:${ip}`, 20, 10 * 60_000);
+  if (!perAccount.allowed || !perIp.allowed) {
+    redirect("/admin/login?error=rate");
+  }
+
   try {
     await signIn("credentials", {
       email: formData.get("email"),
@@ -55,7 +69,9 @@ export default async function AdminLoginPage({
 
         {error && (
           <p className="font-humanist text-sm text-ac-rose mb-4 bg-ac-rose/10 border border-ac-rose/25 rounded-lg px-3 py-2">
-            Invalid email or password.
+            {error === "rate"
+              ? "Too many attempts. Please wait a few minutes and try again."
+              : "Invalid email or password."}
           </p>
         )}
 

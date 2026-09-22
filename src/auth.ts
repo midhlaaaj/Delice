@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { db } from "@/db";
 import { adminUsers } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { checkRateLimit, getIpFromHeaders } from "@/lib/rate-limit";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { strategy: "jwt" },
@@ -14,10 +15,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
+      authorize: async (credentials, request) => {
         const email = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
         if (!email || !password) return null;
+
+        // Defense in depth: the login page's own server action already
+        // rate-limits with a user-facing message. This second check covers
+        // direct calls to the NextAuth credentials callback endpoint.
+        const ip = getIpFromHeaders(request.headers);
+        const { allowed } = checkRateLimit(`auth:${ip}`, 15, 10 * 60_000);
+        if (!allowed) return null;
 
         const [user] = await db
           .select()
@@ -33,12 +41,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    authorized: ({ auth, request }) => {
-      const isAdminRoute = request.nextUrl.pathname.startsWith("/admin") &&
-        !request.nextUrl.pathname.startsWith("/admin/login");
-      if (!isAdminRoute) return true;
-      return !!auth?.user;
-    },
-  },
+  // Admin-route gating happens explicitly in src/proxy.ts — passing a custom
+  // function to `auth()` there bypasses NextAuth's own authorized-callback
+  // redirect, so an `authorized` callback here would be dead code.
 });
