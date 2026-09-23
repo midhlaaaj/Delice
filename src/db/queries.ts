@@ -10,14 +10,6 @@ export async function getWheelProducts() {
     .orderBy(asc(products.wheelSortOrder));
 }
 
-export async function getBakeProducts() {
-  return db
-    .select()
-    .from(products)
-    .where(eq(products.category, "bake"))
-    .orderBy(asc(products.sortOrder));
-}
-
 export async function getAllProducts() {
   return db.select().from(products).where(eq(products.isPublished, true)).orderBy(asc(products.sortOrder));
 }

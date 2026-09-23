@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Modak } from "next/font/google";
-import { HeroTransitionProvider } from "@/components/hero-transition";
 import "./globals.css";
 
 const instrument = Instrument_Sans({
@@ -28,9 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${instrument.variable} ${modak.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-ink">
-        <HeroTransitionProvider>{children}</HeroTransitionProvider>
-      </body>
+      <body className="min-h-full flex flex-col bg-cream text-ink">{children}</body>
     </html>
   );
 }
