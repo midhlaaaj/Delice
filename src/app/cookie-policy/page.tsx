@@ -3,6 +3,7 @@ import { LegalPage, LegalSection, LegalList } from "@/components/legal-page";
 export const metadata = {
   title: "Cookie Policy — Delice",
   description: "How Delice uses cookies on this website.",
+  alternates: { canonical: "/cookie-policy" },
 };
 
 const UPDATED = "22 September 2026";

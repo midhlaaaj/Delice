@@ -7,6 +7,7 @@ import { getPublishedBlogPosts } from "@/db/queries";
 export const metadata = {
   title: "Journal — Delice",
   description: "Stories from the Delice kitchen — new flavors, behind-the-scenes, and baking notes.",
+  alternates: { canonical: "/blog" },
 };
 
 export default async function BlogPage() {

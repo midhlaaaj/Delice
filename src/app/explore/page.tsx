@@ -8,6 +8,7 @@ import { getAllProducts } from "@/db/queries";
 export const metadata = {
   title: "Full Catalogue — Delice",
   description: "Every Delice cheesecake and bake, in one place.",
+  alternates: { canonical: "/explore" },
 };
 
 export default async function ExploreAllPage({

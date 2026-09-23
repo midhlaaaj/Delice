@@ -3,6 +3,7 @@ import { getPublishedVideos } from "@/db/queries";
 
 export const metadata = {
   title: "Explore Videos — Delice",
+  alternates: { canonical: "/videos" },
 };
 
 export default async function VideosPage() {

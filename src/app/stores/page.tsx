@@ -8,6 +8,7 @@ import { getApprovedStores } from "@/db/queries";
 export const metadata = {
   title: "Find a Store — Delice",
   description: "Every Delice store and partner shop, searchable by name, area, or your location.",
+  alternates: { canonical: "/stores" },
 };
 
 export default async function StoresPage() {

@@ -3,6 +3,7 @@ import { LegalPage, LegalSection, LegalList } from "@/components/legal-page";
 export const metadata = {
   title: "Terms & Conditions — Delice",
   description: "The terms that apply to using the Delice website.",
+  alternates: { canonical: "/terms-and-conditions" },
 };
 
 const UPDATED = "22 September 2026";

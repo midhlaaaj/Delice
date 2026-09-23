@@ -26,6 +26,14 @@ export async function generateMetadata({
   return {
     title: `${product.name} — Delice`,
     description: product.description,
+    alternates: { canonical: `/product/${product.slug}` },
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      url: `/product/${product.slug}`,
+      type: "website",
+      images: product.imageThreeQuarterUrl ? [product.imageThreeQuarterUrl] : undefined,
+    },
   };
 }
 
