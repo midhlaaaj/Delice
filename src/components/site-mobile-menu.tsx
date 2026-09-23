@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/button";
 import { NAV_LINKS } from "@/components/site-nav";
+import { WHATSAPP_PARTNER_URL } from "@/lib/site";
 
 function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -86,7 +87,14 @@ export function SiteMobileMenu() {
           </nav>
 
           <div className="mt-auto pt-8 pb-8 flex flex-col gap-5">
-            <Button href="/#partner-wholesale" variant="solid" className="w-full" onClick={() => setOpen(false)}>
+            <Button
+              href={WHATSAPP_PARTNER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="solid"
+              className="w-full"
+              onClick={() => setOpen(false)}
+            >
               Become a Partner
             </Button>
             <p className="font-humanist text-[11px] font-semibold uppercase tracking-[0.15em] text-ac-secondary/60 text-center">

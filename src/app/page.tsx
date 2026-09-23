@@ -7,6 +7,7 @@ import { ProductCounterGrid } from "@/components/product-counter-grid";
 import { StoreLocatorPanel } from "@/components/store-locator-panel";
 import { StoreStructuredData } from "@/components/store-schema";
 import { Button } from "@/components/button";
+import { WHATSAPP_PARTNER_URL } from "@/lib/site";
 import {
   getWheelProducts,
   getLatestProducts,
@@ -210,7 +211,9 @@ export default async function HomePage() {
                   </p>
                 </div>
                 <Button
-                  href="mailto:partner@delicedesserts.com?subject=Wholesale%20Partner%20Inquiry"
+                  href={WHATSAPP_PARTNER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   variant="outline-inverse"
                 >
                   Partner Inquiries

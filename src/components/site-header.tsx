@@ -4,6 +4,7 @@ import { SiteMobileMenu } from "@/components/site-mobile-menu";
 import { SiteNav } from "@/components/site-nav";
 import { SiteTrustBanner } from "@/components/site-trust-banner";
 import { Button } from "@/components/button";
+import { WHATSAPP_PARTNER_URL } from "@/lib/site";
 
 export async function SiteHeader() {
   const settings = await getSiteSettings();
@@ -26,7 +27,7 @@ export async function SiteHeader() {
 
         <div className="col-start-3 flex items-center gap-2 justify-self-end">
           <span className="hidden md:inline-flex">
-            <Button href="/#partner-wholesale" variant="solid" size="sm">
+            <Button href={WHATSAPP_PARTNER_URL} target="_blank" rel="noopener noreferrer" variant="solid" size="sm">
               Become a Partner
             </Button>
           </span>

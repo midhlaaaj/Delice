@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { WHATSAPP_PARTNER_URL } from "@/lib/site";
 
 const FOOTER_LINKS = [
   { href: "/explore", label: "Explore All" },
   { href: "/stores", label: "Find a Store" },
   { href: "/videos", label: "Videos" },
   { href: "/blog", label: "Journal" },
-  { href: "/#partner-wholesale", label: "Become a Partner" },
+  { href: WHATSAPP_PARTNER_URL, label: "Become a Partner", external: true },
 ];
 
 const LEGAL_LINKS = [
@@ -24,6 +25,7 @@ export function SiteFooter() {
             <Link
               key={link.label}
               href={link.href}
+              {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="font-humanist text-sm text-ac-on-maroon hover:text-ac-on-maroon-muted transition-colors"
             >
               {link.label}
