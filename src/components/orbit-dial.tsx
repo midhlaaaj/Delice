@@ -6,7 +6,19 @@ import { FlavorVisualCarousel } from "./flavor-visual-carousel";
 import { Button } from "./button";
 import type { Product } from "@/db/schema";
 
-type Geometry = { cx: number; cy: number; itemSpacing: number; curveDepth: number; horizontal: boolean };
+type Geometry = {
+  cx: number;
+  cy: number;
+  itemSpacing: number;
+  curveDepth: number;
+  horizontal: boolean;
+  phone: boolean;
+};
+
+// Mobile: the selected cake is shown large and its neighbours sit just past
+// the screen edges so only a sliver of each peeks in.
+const MOBILE_ACTIVE_SCALE = 2.3;
+const MOBILE_NEIGHBOR_SCALE = 0.54;
 
 function getGeometry(stage: HTMLDivElement): Geometry {
   const rect = stage.getBoundingClientRect();
@@ -15,6 +27,20 @@ function getGeometry(stage: HTMLDivElement): Geometry {
   // here since it stays full-width (and >640px) right up to that point.
   const horizontal = typeof window !== "undefined" ? window.innerWidth < 1024 : rect.width < 640;
 
+  // Matches the sm: breakpoint the component's own sizing classes switch on.
+  const phone = typeof window !== "undefined" ? window.innerWidth < 640 : rect.width < 640;
+
+  if (horizontal && phone) {
+    return {
+      cx: rect.width / 2,
+      cy: rect.height * 0.5,
+      itemSpacing: rect.width * 0.5 - 8,
+      curveDepth: Math.min(100, rect.height * 0.3),
+      horizontal: true,
+      phone: true,
+    };
+  }
+
   if (horizontal) {
     return {
       cx: rect.width / 2,
@@ -22,6 +48,7 @@ function getGeometry(stage: HTMLDivElement): Geometry {
       itemSpacing: rect.width * 0.32,
       curveDepth: Math.min(40, rect.height * 0.12),
       horizontal: true,
+      phone: false,
     };
   }
 
@@ -31,6 +58,7 @@ function getGeometry(stage: HTMLDivElement): Geometry {
     itemSpacing: rect.height * 0.36,
     curveDepth: Math.min(100, rect.width * 0.09),
     horizontal: false,
+    phone: false,
   };
 }
 
@@ -95,7 +123,15 @@ export function OrbitDial({ products }: { products: Product[] }) {
       let zIndex = 0;
       let pointerEvents: "auto" | "none" = "none";
 
-      if (absD < 0.5) {
+      if (geo.phone) {
+        if (absD <= 1.5) {
+          const near = Math.min(absD, 1);
+          scale = MOBILE_ACTIVE_SCALE + (MOBILE_NEIGHBOR_SCALE - MOBILE_ACTIVE_SCALE) * near;
+          opacity = 1 - 0.49 * near - (absD > 1 ? 0.18 * ((absD - 1) / 0.5) : 0);
+          zIndex = absD < 0.5 ? 30 : 10;
+          pointerEvents = "auto";
+        }
+      } else if (absD < 0.5) {
         const t = absD / 0.5;
         scale = 1.55 - 0.15 * t;
         opacity = 1;
@@ -169,7 +205,7 @@ export function OrbitDial({ products }: { products: Product[] }) {
         jumpTo(Math.round(rotationRef.current) + 1);
       }
       scheduleAutoplayRef.current();
-    }, 5000);
+    }, 8000);
   }, [jumpTo, n]);
 
   useEffect(() => {
@@ -239,12 +275,20 @@ export function OrbitDial({ products }: { products: Product[] }) {
 
   if (n === 0) return null;
 
+  const tintBase = active.colorFrom && /^#[0-9a-f]{6}$/i.test(active.colorFrom) ? active.colorFrom : "#EFC3CD";
+  const tint = `${tintBase}33`;
+
   return (
     <div className="flex flex-col gap-2 sm:grid sm:grid-cols-12 sm:gap-8 sm:items-stretch lg:gap-14">
       <div
         ref={stageRef}
-        className="sm:col-span-7 relative h-[230px] sm:h-auto min-h-[320px] w-full flex items-center justify-center overflow-hidden touch-none cursor-grab select-none"
+        className="sm:col-span-7 relative z-10 h-[330px] sm:h-auto min-h-[320px] w-full flex items-center justify-center overflow-hidden touch-none cursor-grab select-none"
       >
+        <div
+          aria-hidden
+          className="sm:hidden absolute inset-0 pointer-events-none transition-[background] duration-500"
+          style={{ background: `radial-gradient(ellipse 60% 45% at 50% 42%, ${tint}, transparent 100%)` }}
+        />
         <svg className="absolute inset-0 w-full h-full pointer-events-none">
           <path ref={arcPathRef} fill="none" stroke="rgba(102,26,38,0.18)" strokeDasharray="4 7" strokeWidth={1.5} />
         </svg>
@@ -269,7 +313,7 @@ export function OrbitDial({ products }: { products: Product[] }) {
                     shadow accents cross-fade on activeIndex change, so switching
                     the active item never restarts or snaps the motion itself. */}
                 <div
-                  className="relative w-28 h-28 sm:w-44 sm:h-44 animate-float-3d"
+                  className="relative w-28 h-28 sm:w-44 sm:h-44 animate-float-3d max-sm:!filter-none"
                   style={{
                     filter: i === activeIndex ? "drop-shadow(0 16px 18px rgba(42,22,32,0.3))" : "none",
                     transition: "filter 500ms ease",
@@ -283,7 +327,7 @@ export function OrbitDial({ products }: { products: Product[] }) {
                   />
                 </div>
                 <div
-                  className="absolute left-1/2 -translate-x-1/2 bottom-1 w-[55%] h-3"
+                  className="max-sm:hidden absolute left-1/2 -translate-x-1/2 bottom-1 w-[55%] h-3"
                   style={{ opacity: i === activeIndex ? 1 : 0, transition: "opacity 500ms ease" }}
                 >
                   <div className="animate-float-3d-shadow w-full h-full rounded-full bg-ac-ink/30 blur-md" />
@@ -293,7 +337,7 @@ export function OrbitDial({ products }: { products: Product[] }) {
           ))}
         </div>
 
-        <div className="flex sm:hidden absolute inset-y-0 left-1 right-1 items-center justify-between z-20 pointer-events-none">
+        <div className="flex sm:hidden absolute inset-x-1 top-[44%] -translate-y-1/2 items-center justify-between z-20 pointer-events-none">
           <button
             aria-label="Previous flavor"
             onClick={() => {
@@ -341,8 +385,8 @@ export function OrbitDial({ products }: { products: Product[] }) {
       </div>
 
       <div
-        className="sm:col-span-5 flex flex-col justify-center gap-3 sm:gap-4 transition-opacity duration-150"
-        style={{ opacity: panelFading ? 0.7 : 1 }}
+        className="sm:col-span-5 relative z-0 flex flex-col justify-center gap-3 sm:gap-4 transition-opacity duration-150 max-sm:-mt-28 max-sm:pt-8 max-sm:px-4 max-sm:pb-4 max-sm:rounded-3xl max-sm:border max-sm:border-ac-border-hairline max-sm:bg-[var(--flavor-tint)]"
+        style={{ opacity: panelFading ? 0.7 : 1, ["--flavor-tint" as string]: tint }}
       >
         <div>
           <span className="font-humanist text-[11px] font-semibold text-ac-secondary">
