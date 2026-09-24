@@ -102,7 +102,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Couldn't find coordinates in that link." }, { status: 422 });
     }
 
-    return NextResponse.json({ ...coords, resolvedUrl: finalUrl });
+    return NextResponse.json(coords);
   } catch {
     return NextResponse.json({ error: "Couldn't reach that link." }, { status: 502 });
   }
